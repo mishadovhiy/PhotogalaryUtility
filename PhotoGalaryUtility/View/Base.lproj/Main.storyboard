@@ -4,6 +4,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -20,5 +22,44 @@
             </objects>
             <point key="canvasLocation" x="683" y="0.0"/>
         </scene>
+        <!--Galary View Controller-->
+        <scene sceneID="rRw-uh-M9U">
+            <objects>
+                <viewController storyboardIdentifier="GalaryViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Qut-LR-V1A" customClass="GalaryViewController" customModule="PhotoGalaryUtility" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1p4-7v-uPX">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="zlG-yf-V3T">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="76z-aa-5zx">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="A7c-so-zur"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="zlG-yf-V3T" firstAttribute="leading" secondItem="A7c-so-zur" secondAttribute="leading" id="6XG-nO-i12"/>
+                            <constraint firstAttribute="bottom" secondItem="zlG-yf-V3T" secondAttribute="bottom" id="Q9R-3Q-ZkF"/>
+                            <constraint firstItem="A7c-so-zur" firstAttribute="trailing" secondItem="zlG-yf-V3T" secondAttribute="trailing" id="SRS-Wi-abM"/>
+                            <constraint firstItem="zlG-yf-V3T" firstAttribute="top" secondItem="1p4-7v-uPX" secondAttribute="top" id="U1I-LG-CBk"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VDX-dD-xZn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="662" y="753"/>
+        </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

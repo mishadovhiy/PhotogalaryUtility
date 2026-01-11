@@ -10,4 +10,7 @@ import UIKit
 class PhotoCollectionViewCell: UICollectionViewCell {
     typealias DataModel = GalaryItemPresentationModel
 
+    func set(_ data: GalaryItemPresentationModel) {
+        
+    }
 }
