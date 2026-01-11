@@ -11,3 +11,10 @@ struct ButtonData {
     let title: String
     var didPress: ()->()
 }
+
+extension ButtonData {
+    enum Style {
+        case primary
+        case link
+    }
+}

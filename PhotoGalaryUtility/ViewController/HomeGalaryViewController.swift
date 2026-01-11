@@ -1,0 +1,18 @@
+//
+//  HomeGalaryViewController.swift
+//  PhotoGalaryUtility
+//
+//  Created by Mykhailo Dovhyi on 11.01.2026.
+//
+
+import UIKit
+
+class HomeGalaryViewController: UIViewController {
+//collection view
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Do any additional setup after loading the view.
+    }
+   
+}
