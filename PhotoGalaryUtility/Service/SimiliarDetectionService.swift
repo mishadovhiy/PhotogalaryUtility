@@ -13,7 +13,7 @@ class SimiliarDetectionService {
     let imageRequestOptions = PHImageRequestOptions()
     let videoRequestOptions = PHVideoRequestOptions()
     let type: MediaGroupType = .similiarVideos
-
+    let imageWidth: CGFloat = 25
     init() {
         imageRequestOptions.deliveryMode = .fastFormat
         imageRequestOptions.resizeMode = .fast
@@ -29,25 +29,35 @@ class SimiliarDetectionService {
         var distance: Float = 0
         let primaryArray = a.count >= b.count ? a : b
         let secondaryArray = primaryArray == a ? b : a
+        var count: Float = 0
         for aIdx in 0..<primaryArray.count {
             if secondaryArray.count - 1 >= aIdx {
                 var new: Float = 0
                 try? primaryArray[aIdx].computeDistance(&new, to: secondaryArray[aIdx])
                 distance += new
+                count += 1
             }
 
         }
+//        a.forEach { a in
+//            b.forEach { b in
+//                var new: Float = 0
+//                try? a.computeDistance(&new, to: b)
+//                distance += new
+//            }
+//        }
         
-        return distance / Float(a.count + b.count)
+        return distance / count
     }
 
     func videoThumbs(
         from asset: PHAsset,
         completion: @escaping ([UIImage]) -> Void
     ) {
-
-let frameCount = 5
+        print(asset.creationDate, " regfsdf ", asset.localIdentifier)
         PHImageManager.default().requestAVAsset(forVideo: asset, options: videoRequestOptions) { avAsset, _, _ in
+            let frameCount: Int = 5
+
             guard let avAsset = avAsset else {
                 completion([])
                 return
@@ -55,7 +65,7 @@ let frameCount = 5
 
             let generator = AVAssetImageGenerator(asset: avAsset)
             generator.appliesPreferredTrackTransform = true
-            generator.maximumSize = CGSize(width: 50, height: 50)
+            generator.maximumSize = CGSize(width: self.imageWidth, height: self.imageWidth)
 
             let duration = CMTimeGetSeconds(avAsset.duration)
 
@@ -70,7 +80,7 @@ let frameCount = 5
 
             for time in times {
                 if let cgImage = try? generator.copyCGImage(at: time, actualTime: nil) {
-                    images.append(.init(cgImage: cgImage))
+                    images.append(.init(cgImage: cgImage).changeSize(newWidth: self.imageWidth))
                 }
             }
 
@@ -79,7 +89,7 @@ let frameCount = 5
     }
     
     @available(iOS 13.0, *)
-    func featurePrint(for asset: PHAsset, targetSize: CGSize = CGSize(width: 200, height: 200), completion: @escaping ([VNFeaturePrintObservation]?) -> Void) {
+    func featurePrint(for asset: PHAsset, completion: @escaping ([VNFeaturePrintObservation]?) -> Void) {
         fetchThumb(asset) { images in
             let totalCount = images.count
             var observations: [VNFeaturePrintObservation] = []
@@ -132,7 +142,7 @@ let frameCount = 5
     }
     
     private func imageThumb(_ asset: PHAsset, completion:@escaping(_ image: [UIImage?])->()) {
-        let sizeWidth: CGFloat = 200
+        let sizeWidth: CGFloat = imageWidth
         if Thread.isMainThread {
             fatalError()
         }
@@ -142,8 +152,6 @@ let frameCount = 5
             contentMode: .aspectFill,
             options: imageRequestOptions
         ) { image, error in
-            let data = image?.jpegData(compressionQuality: 0.8)
-            let image = UIImage(data: data ?? .init())
             completion([image?.changeSize(newWidth: sizeWidth)])
         }
     }

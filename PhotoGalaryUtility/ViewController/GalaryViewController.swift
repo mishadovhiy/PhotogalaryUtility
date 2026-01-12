@@ -23,7 +23,7 @@ class GalaryViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
-        
+
         navigationItem.largeTitleDisplayMode = .always
         collectionView.contentInset.top = headerView.frame.height
     }
@@ -35,8 +35,8 @@ class GalaryViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.allowsMultipleSelection = true
         collectionView.isMultipleTouchEnabled = true
-        if #available(iOS 14.0, *) {
-            collectionView.allowsMultipleSelectionDuringEditing = true
+        if #available(iOS 13.0, *) {
+            collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         }
         if #available(iOS 14.0, *) {
             collectionView.isEditing = true
