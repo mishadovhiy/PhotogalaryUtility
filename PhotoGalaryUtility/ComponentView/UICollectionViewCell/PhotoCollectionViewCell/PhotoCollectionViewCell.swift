@@ -8,9 +8,23 @@
 import UIKit
 
 class PhotoCollectionViewCell: UICollectionViewCell {
-    typealias DataModel = GalaryItemPresentationModel
-
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var topLeftLabel: UILabel!
+    
+    @IBOutlet weak var checkmarkIndicator: UIImageView!
+    @IBOutlet weak var bottomRightLabel: UILabel!
+    
     func set(_ data: GalaryItemPresentationModel) {
-        
+        switch data.asset {
+        case .assetName(let name):
+            self.imageView.image = .init(named: name)
+
+        default:
+            self.imageView.image = nil
+        }
+        self.backgroundColor = .white
+        bottomRightLabel.superview?.superview?.isHidden = true
+        checkmarkIndicator.superview?.isHidden = true
+        topLeftLabel.superview?.isHidden = true
     }
 }

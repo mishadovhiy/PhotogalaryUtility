@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="PhotoCollectionViewCell" customModule="PhotoGalaryUtility" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCollectionViewCell" id="gTV-IL-0wX" customClass="PhotoCollectionViewCell" customModule="PhotoGalaryUtility" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="248" height="186"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -22,7 +22,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="248" height="186"/>
                     </imageView>
                     <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="GHB-K9-ld4">
-                        <rect key="frame" x="6" y="6" width="53.333333333333343" height="20.333333333333329"/>
+                        <rect key="frame" x="6.0000000000000036" y="5.9999999999999982" width="53.333333333333343" height="20.333333333333329"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="200" translatesAutoresizingMaskIntoConstraints="NO" id="Lf9-KI-dXb">
                                 <rect key="frame" x="6" y="0.0" width="41.333333333333336" height="20.333333333333332"/>
@@ -120,6 +120,12 @@
                 <constraint firstItem="GHB-K9-ld4" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="6" id="wAc-A4-RLz"/>
             </constraints>
             <size key="customSize" width="248" height="186"/>
+            <connections>
+                <outlet property="bottomRightLabel" destination="4g9-ra-DZc" id="vGq-5s-5RO"/>
+                <outlet property="checkmarkIndicator" destination="kRm-7B-CA9" id="9CS-2l-3ne"/>
+                <outlet property="imageView" destination="cGh-aP-bG6" id="kpC-XF-2yi"/>
+                <outlet property="topLeftLabel" destination="Lf9-KI-dXb" id="swG-QJ-gTV"/>
+            </connections>
             <point key="canvasLocation" x="51.908396946564885" y="138.73239436619718"/>
         </collectionViewCell>
     </objects>
@@ -128,7 +134,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemPinkColor">
-            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
