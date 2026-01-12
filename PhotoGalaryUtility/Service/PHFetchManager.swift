@@ -16,6 +16,7 @@ protocol PHFetchManagerDelegate {
 class PHFetchManager {
     var delegate: PHFetchManagerDelegate?
     var assets: PHFetchResult<PHAsset> = .init()
+    private let imageManager = PHCachingImageManager()
     
     init(delegate: PHFetchManagerDelegate? = nil) {
         self.delegate = delegate
@@ -31,19 +32,17 @@ class PHFetchManager {
         assets = PHAsset.fetchAssets(with: .image, options: fetchOptions)
         delegate?.didCompleteFetching()
     }
-    
-    func fetchThumb(_ asset: PHAsset,
-                    completion: @escaping(_ image: UIImage?) -> ()) {
+
+    func fetchThumb(_ asset: PHAsset, completion: @escaping(_ image: UIImage?) -> ()) {
         DispatchQueue(label: "thumb", qos: .userInitiated).async {
-            let imageManager = PHCachingImageManager()
-            let size: CGSize = .init(width: 60, height: 60)
-            imageManager.requestImage(for: asset, targetSize: size,
+            let sizeWidth: CGFloat = 200
+            self.imageManager.requestImage(for: asset, targetSize: .init(width: sizeWidth, height: sizeWidth),
                                       contentMode: .aspectFill,
                                       options: nil) { image, _ in
-                let data = image?.jpegData(compressionQuality: 0.1)
+                let data = image?.jpegData(compressionQuality: 0.8)
                 let image = UIImage(data: data ?? .init())
                 DispatchQueue.main.async {
-                    completion(image?.changeSize(newWidth: 20))
+                    completion(image?.changeSize(newWidth: sizeWidth))
                 }
             }
         }

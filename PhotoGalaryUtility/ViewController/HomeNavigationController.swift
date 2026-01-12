@@ -14,13 +14,14 @@ class HomeNavigationController: UINavigationController {
         let vc3 = UIViewController()
         vc3.view.backgroundColor = .orange
         setViewControllers([vc3], animated: true)
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
             let vc2 = GalaryViewController.configure()
+            vc2.navigationItem.largeTitleDisplayMode = .always
+            vc2.navigationController?.navigationItem.largeTitleDisplayMode = .always
             self.setViewControllers([vc2], animated: true)
         })
         super.loadView()
-
+        navigationItem.largeTitleDisplayMode = .always
     }
 }
 

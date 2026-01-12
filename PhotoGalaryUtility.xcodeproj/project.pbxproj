@@ -32,6 +32,8 @@
 		826C1E152F13637A0095A600 /* GalaryItemPresentationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826C1E142F13637A0095A600 /* GalaryItemPresentationModel.swift */; };
 		826C1E172F1363F50095A600 /* MediaTypePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826C1E162F1363F50095A600 /* MediaTypePickerViewController.swift */; };
 		829BF03B2F13FA4F000FAE35 /* CompressorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829BF03A2F13FA4F000FAE35 /* CompressorCell.swift */; };
+		829BF0522F14EC46000FAE35 /* SimilarityDataBaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829BF0512F14EC46000FAE35 /* SimilarityDataBaseModel.swift */; };
+		829BF0542F14ECB7000FAE35 /* FileManagerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829BF0532F14ECB7000FAE35 /* FileManagerService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +64,8 @@
 		826C1E142F13637A0095A600 /* GalaryItemPresentationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalaryItemPresentationModel.swift; sourceTree = "<group>"; };
 		826C1E162F1363F50095A600 /* MediaTypePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTypePickerViewController.swift; sourceTree = "<group>"; };
 		829BF03A2F13FA4F000FAE35 /* CompressorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressorCell.swift; sourceTree = "<group>"; };
+		829BF0512F14EC46000FAE35 /* SimilarityDataBaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarityDataBaseModel.swift; sourceTree = "<group>"; };
+		829BF0532F14ECB7000FAE35 /* FileManagerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,11 +123,11 @@
 			children = (
 				826C1DBB2F1350880095A600 /* SceneDelegate.swift */,
 				826C1DB62F1350880095A600 /* AppDelegate.swift */,
+				826C1DE72F13571A0095A600 /* Service */,
 				826C1E082F135F980095A600 /* Model */,
 				826C1DB32F1350880095A600 /* View */,
 				826C1DB52F1350880095A600 /* ViewController */,
 				826C1E0F2F1360A80095A600 /* ComponentView */,
-				826C1DE72F13571A0095A600 /* Service */,
 				826C1DE42F1356B70095A600 /* Extension */,
 				826C1DB72F1350880095A600 /* Assets.xcassets */,
 				826C1DB82F1350880095A600 /* Info.plist */,
@@ -147,6 +151,7 @@
 			children = (
 				826C1DDE2F1356350095A600 /* PHFetchManager.swift */,
 				826C1DE02F1356640095A600 /* PHLibraryEditorManager.swift */,
+				829BF0532F14ECB7000FAE35 /* FileManagerService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -188,6 +193,7 @@
 		826C1E082F135F980095A600 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				829BF0512F14EC46000FAE35 /* SimilarityDataBaseModel.swift */,
 				826C1E092F135FA10095A600 /* DataModel */,
 			);
 			path = Model;
@@ -316,10 +322,12 @@
 				826C1DE32F1356B20095A600 /* Date.swift in Sources */,
 				826C1DC22F1350880095A600 /* AppDelegate.swift in Sources */,
 				826C1E052F135F1E0095A600 /* RefreshViewController.swift in Sources */,
+				829BF0542F14ECB7000FAE35 /* FileManagerService.swift in Sources */,
 				826C1E002F135EC00095A600 /* OnboardingPageViewController.swift in Sources */,
 				826C1DC52F1351490095A600 /* HomeNavigationController.swift in Sources */,
 				826C1DE12F1356640095A600 /* PHLibraryEditorManager.swift in Sources */,
 				826C1DF62F135B2F0095A600 /* ButtonData.swift in Sources */,
+				829BF0522F14EC46000FAE35 /* SimilarityDataBaseModel.swift in Sources */,
 				826C1E172F1363F50095A600 /* MediaTypePickerViewController.swift in Sources */,
 				826C1E152F13637A0095A600 /* GalaryItemPresentationModel.swift in Sources */,
 				826C1E0E2F1360940095A600 /* VideoCompressorViewController.swift in Sources */,
