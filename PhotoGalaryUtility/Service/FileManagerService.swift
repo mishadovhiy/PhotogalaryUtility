@@ -34,18 +34,25 @@ struct FileManagerService {
             return
         }
     }
-    enum DataType: String {
+    enum DataType {
         case similiarPhotos
 
-        var responseType: Codable.Type {
+        case mediaGroupType(MediaGroupType)
+        
+        var rawValue: String {
             switch self {
-            case .similiarPhotos:
-                SimilarityDataBaseModel.self
+            case .mediaGroupType(let mediaGroupType):
+                    .init(describing: self.self) + mediaGroupType.rawValue
+            default:
+                    .init(describing: self.self)
             }
         }
         
-        struct Responses {
-            typealias Cloud = SimilarityDataBaseModel
+        var responseType: Codable.Type {
+            switch self {
+            case .similiarPhotos, .mediaGroupType:
+                SimilarityDataBaseModel.self
+            }
         }
     }
     

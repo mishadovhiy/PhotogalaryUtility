@@ -29,7 +29,7 @@ class PHFetchManager {
     func fetch() {
         let fetchOptions = PHFetchOptions()
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-        assets = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+        assets = PHAsset.fetchAssets(with: .video, options: fetchOptions)
         delegate?.didCompleteFetching()
     }
 

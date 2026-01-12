@@ -6,6 +6,7 @@
 //
 
 import UIKit
+ import Photos
 
 class PhotoCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
@@ -18,13 +19,15 @@ class PhotoCollectionViewCell: UICollectionViewCell {
         switch data.asset {
         case .assetName(let name):
             self.imageView.image = .init(named: name)
-
+        case .phAsset(let asset):
+            topLeftLabel.text = asset.localIdentifier
+            self.imageView.image = nil
         default:
             self.imageView.image = nil
         }
         self.backgroundColor = .white
         bottomRightLabel.superview?.superview?.isHidden = true
         checkmarkIndicator.superview?.isHidden = true
-        topLeftLabel.superview?.isHidden = true
+        topLeftLabel.superview?.isHidden = false
     }
 }
