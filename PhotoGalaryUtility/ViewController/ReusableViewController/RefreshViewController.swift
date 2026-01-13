@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RefreshViewController: UIViewController {
+class RefreshViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

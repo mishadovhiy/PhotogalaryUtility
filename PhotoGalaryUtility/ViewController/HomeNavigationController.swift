@@ -19,9 +19,8 @@ class HomeNavigationController: UINavigationController {
     override func loadView() {
         self.navigationItem.largeTitleDisplayMode = .always
         super.loadView()
-        navigationItem.largeTitleDisplayMode = .always
+        setRefreshing()
         loadButtonsStack()
-        setViewControllers([RefreshViewController.configure()], animated: true)
     }
     
     override func viewDidLoad() {
@@ -29,11 +28,17 @@ class HomeNavigationController: UINavigationController {
         dbSetInitialViewController()
     }
     
-    func dbSetInitialViewController() {
+    func setRefreshing(completion: (()->())? = nil) {
+        let vc = RefreshViewController.configure()
+        vc.appearedAction = completion
+        setViewControllers([vc], animated: true)
+    }
+    
+    func dbSetInitialViewController(test: Bool = false) {
         DispatchQueue(label: "db", qos: .background).async {
             DispatchQueue.main.async {
                 DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
-                    self.setViewControllers([GalaryViewController.configure()], animated: true)
+                    self.setViewControllers([test ? GalaryViewController.configure() : OnboardingPageViewController.configure()], animated: true)
                 })
             }
         }
@@ -42,7 +47,10 @@ class HomeNavigationController: UINavigationController {
     private func setupButtons(topViewController: UIViewController? = nil) {
 //        let animator = UIViewPropertyAnimator(duration: 0.3, curve: .linear)
         let vc = (topViewController ?? self.topViewController) as? BaseViewController
-        let buttonData = [vc?.primaryButton, vc?.secondaryButton]
+        var buttonData = [vc?.primaryButton, vc?.secondaryButton]
+        if let onboardingVC = (topViewController ?? self.topViewController) as? OnboardingPageViewController {
+            buttonData = [onboardingVC.primaryData, nil]
+        }
         let lastView = self.buttonsStack?.arrangedSubviews.last
         var safeAreaHeight = buttonData.compactMap({
             $0 == nil ? 0 : 60
@@ -134,6 +142,12 @@ class HomeNavigationController: UINavigationController {
         return vc
     }
     
+    @objc private func buttonDidPress(_ sender: UIButton) {
+        let vc = (viewControllers.first as? BaseViewController)
+        let data = [vc?.primaryButton ?? (viewControllers.first as? OnboardingPageViewController)?.primaryData, vc?.secondaryButton][sender.tag]
+        print(data)
+        data?.didPress?()
+    }
 }
 
 
@@ -154,14 +168,9 @@ extension HomeNavigationController {
     }
     
     func loadButtons() {
-//        let view = UIView()
-//        view.backgroundColor = .clear
-//        view.isUserInteractionEnabled = false
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        buttonsStack?.addArrangedSubview(view)
-//        view.heightAnchor.constraint(equalToConstant: 10).isActive = true
         Array(0..<2).forEach { i in
             let button = UIButton()
+            button.addTarget(self, action: #selector(buttonDidPress(_:)), for: .touchUpInside)
             button.tag = i
             buttonsStack?.insertArrangedSubview(button, at: i)
             button.translatesAutoresizingMaskIntoConstraints = false

@@ -9,23 +9,24 @@ import UIKit
 
 class OnboardingDetailViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
+    @IBOutlet weak var childImaeOverlay: UIImageView!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
+    var type: OnboardingPageViewController.DetailContentType?
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func loadView() {
+        super.loadView()
+        loadChild()
     }
-    */
+}
 
+extension OnboardingDetailViewController {
+    func loadChild() {
+        
+    }
+}
+
+extension OnboardingDetailViewController {
     static func configure() -> Self {
         return self.configure(storyboardID: "Onboarding")
     }

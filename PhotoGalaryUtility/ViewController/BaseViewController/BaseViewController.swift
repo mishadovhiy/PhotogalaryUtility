@@ -16,4 +16,12 @@ class BaseViewController: UIViewController {
     var getTransactionAnimationView: UIView? {
         navigationTransactionAnimatedView ?? navigationTransactionTargetView
     }
+    
+    var appearedAction: (()->())?
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        appearedAction?()
+        appearedAction = nil
+    }
 }

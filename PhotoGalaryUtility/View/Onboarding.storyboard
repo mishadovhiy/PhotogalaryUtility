@@ -4,6 +4,9 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Onboarding Page View Controller-->
@@ -14,5 +17,78 @@
             </objects>
             <point key="canvasLocation" x="201" y="-136"/>
         </scene>
+        <!--Onboarding Detail View Controller-->
+        <scene sceneID="p2E-gM-oAF">
+            <objects>
+                <viewController storyboardIdentifier="OnboardingDetailViewController" id="g2y-B2-UYr" customClass="OnboardingDetailViewController" customModule="PhotoGalaryUtility" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dUZ-c5-xZb">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="tVQ-dD-vWF">
+                                <rect key="frame" x="35" y="138" width="323" height="626"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Ah-fg-ySF">
+                                        <rect key="frame" x="0.0" y="0.0" width="323" height="556"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iphoneIllustration" translatesAutoresizingMaskIntoConstraints="NO" id="tA8-4q-F6c">
+                                                <rect key="frame" x="38.666666666666686" y="0.0" width="246" height="556"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="tA8-4q-F6c" firstAttribute="top" secondItem="9Ah-fg-ySF" secondAttribute="top" id="2hP-uM-PAj"/>
+                                            <constraint firstAttribute="bottom" secondItem="tA8-4q-F6c" secondAttribute="bottom" id="CCB-Ua-kYH"/>
+                                            <constraint firstItem="tA8-4q-F6c" firstAttribute="centerX" secondItem="9Ah-fg-ySF" secondAttribute="centerX" id="H51-fQ-9mi"/>
+                                        </constraints>
+                                    </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="ycq-Ii-DHg">
+                                        <rect key="frame" x="0.0" y="556" width="323" height="70"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label Label Label Label Label Label Label Label Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="yc8-Qy-aWX">
+                                                <rect key="frame" x="0.0" y="0.0" width="323" height="41"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label Label Label Label Label Label Label Label Label Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="F4A-j3-5YU">
+                                                <rect key="frame" x="0.0" y="41" width="323" height="29"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="70" id="8uT-pK-JWJ"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="eRs-19-Dnv"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="tVQ-dD-vWF" firstAttribute="top" secondItem="eRs-19-Dnv" secondAttribute="top" constant="20" id="5ql-W7-aGp"/>
+                            <constraint firstItem="eRs-19-Dnv" firstAttribute="trailing" secondItem="tVQ-dD-vWF" secondAttribute="trailing" constant="35" id="aB5-J5-iy3"/>
+                            <constraint firstItem="tVQ-dD-vWF" firstAttribute="leading" secondItem="eRs-19-Dnv" secondAttribute="leading" constant="35" id="eIG-AU-x9f"/>
+                            <constraint firstItem="eRs-19-Dnv" firstAttribute="bottom" secondItem="tVQ-dD-vWF" secondAttribute="bottom" constant="20" id="kJe-E7-Tpp"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="childImaeOverlay" destination="tA8-4q-F6c" id="1Dk-vg-DFh"/>
+                        <outlet property="descriptionLabel" destination="F4A-j3-5YU" id="dB2-qz-K2p"/>
+                        <outlet property="titleLabel" destination="yc8-Qy-aWX" id="vPL-D7-RH5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lNb-bK-biQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1056" y="-117"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="iphoneIllustration" width="246" height="498"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
