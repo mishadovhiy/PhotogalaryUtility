@@ -1,0 +1,54 @@
+//
+//  MediaTypePickerViewController.swift
+//  PhotoGalaryUtility
+//
+//  Created by Mykhailo Dovhyi on 11.01.2026.
+//
+
+import UIKit
+
+class MediaTypePickerViewController: UIViewController {
+   
+    @IBOutlet private weak var collectionView: UICollectionView!
+    let collectionData: [MediaGroupType] = MediaGroupType.allCases.filter({
+        $0.presentingOnPicker
+    })
+    
+    override func loadView() {
+        super.loadView()
+        title = "Media"
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.contentInset.left = 16
+        collectionView.contentInset.right = 16
+
+    }
+}
+
+extension MediaTypePickerViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        collectionData.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: .init(describing: MediaTypeCell.self), for: indexPath) as! MediaTypeCell
+        cell.set(type: collectionData[indexPath.row], dataCount: 1786)
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        .init(width: collectionView.frame.width / 2 - 20, height: 130)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = GalaryViewController.configure()
+        vc.mediaType = collectionData[indexPath.row]
+        navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+extension MediaTypePickerViewController {
+    static func configure() -> Self {
+        return self.configure(storyboardID: "Reusable")
+    }
+}

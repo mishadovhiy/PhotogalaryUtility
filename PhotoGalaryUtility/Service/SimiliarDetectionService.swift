@@ -133,9 +133,10 @@ class SimiliarDetectionService {
         case .similiarPhotos, .dublicatedPhotos:
             imageThumb(asset, completion: completion)
 
-        case .similiarVideos, .allVideos:
+        case .similiarVideos:
             videoThumbs(from: asset, completion: completion)
-            
+        default:
+            completion([])
         }
     }
     
