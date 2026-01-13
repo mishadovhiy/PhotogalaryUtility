@@ -76,12 +76,11 @@ struct FileManagerService {
         }
     }
     
-    var similiaritiesData: SimilarityDataBaseModel {
-        get {
-            load(type: .similiarPhotos) as? SimilarityDataBaseModel ?? .init()
-        }
-        set {
-            writeData(newValue, type: .similiarPhotos)
-        }
+    func similiaritiesData(type: MediaGroupType) -> SimilarityDataBaseModel {
+        load(type: .mediaGroupType(type)) as? SimilarityDataBaseModel ?? .init()
+    }
+    
+    func setSimiliarityData(type: MediaGroupType, newValue: SimilarityDataBaseModel) {
+        writeData(newValue, type: .mediaGroupType(type))
     }
 }

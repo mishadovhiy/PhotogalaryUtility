@@ -16,6 +16,24 @@ enum MediaGroupType: String, CaseIterable {
     case similiarVideos
     case allVideos
     
+    var assetType: AssetType {
+        switch self {
+        case .allVideos, .similiarVideos: .video
+        default: .image
+        }
+    }
+    
+    enum AssetType {
+        case image, video
+    }
+    
+    var needAnalizeAI: Bool {
+        switch self {
+        case .similiarPhotos, .similiarVideos, .dublicatedPhotos: true
+        default: false
+        }
+    }
+    
     var presentingOnPicker: Bool {
         switch self {
         case .allVideos: false

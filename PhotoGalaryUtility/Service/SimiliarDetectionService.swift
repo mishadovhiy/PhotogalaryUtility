@@ -12,9 +12,11 @@ import UIKit
 class SimiliarDetectionService {
     let imageRequestOptions = PHImageRequestOptions()
     let videoRequestOptions = PHVideoRequestOptions()
-    let type: MediaGroupType = .similiarVideos
+    let type: MediaGroupType
     let imageWidth: CGFloat = 25
-    init() {
+    
+    init(type: MediaGroupType) {
+        self.type = type
         imageRequestOptions.deliveryMode = .fastFormat
         imageRequestOptions.resizeMode = .fast
         imageRequestOptions.isSynchronous = false
@@ -142,15 +144,15 @@ class SimiliarDetectionService {
     
     private func imageThumb(_ asset: PHAsset, completion:@escaping(_ image: [UIImage?])->()) {
         let sizeWidth: CGFloat = imageWidth
-        if Thread.isMainThread {
-            fatalError()
-        }
+        print("requestimage")
         PHImageManager.default().requestImage(
             for: asset,
             targetSize: .init(width: sizeWidth, height: sizeWidth),
             contentMode: .aspectFill,
             options: imageRequestOptions
         ) { image, error in
+            print("requestimagecompletion")
+
             completion([image?.changeSize(newWidth: sizeWidth)])
         }
     }
@@ -212,7 +214,7 @@ class SimiliarDetectionService {
     
     @available(iOS 13.0, *)
     func featPrint(from assets: [PHAsset], featureDict:[PHAsset: [VNFeaturePrintObservation]], completion: @escaping ([PHAsset: [VNFeaturePrintObservation]]) -> Void) {
-        print(assets.count)
+        print(assets.count, " gerfedas ")
         if assets.isEmpty {
             completion(featureDict)
         } else if let asset = assets.first {

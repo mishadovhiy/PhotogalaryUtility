@@ -30,7 +30,12 @@ class PHFetchManager {
     func fetch() {
         let fetchOptions = PHFetchOptions()
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-        assets = PHAsset.fetchAssets(with: .video, options: fetchOptions)
+        switch mediaType.assetType {
+        case .image:
+            assets = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+        case .video:
+            assets = PHAsset.fetchAssets(with: .video, options: fetchOptions)
+        }
         delegate?.didCompleteFetching()
     }
 

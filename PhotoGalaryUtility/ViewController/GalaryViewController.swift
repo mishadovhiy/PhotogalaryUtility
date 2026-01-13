@@ -14,7 +14,7 @@ class GalaryViewController: BaseViewController {
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     var fetchAssetService: PHFetchManager!
-    var mediaType: MediaGroupType = .similiarVideos
+    var mediaType: MediaGroupType!
     var collectionData: [[GalaryItemPresentationModel]] = []
     var selectedVideoIdxPath: IndexPath?
     var navigationTransaction: NavigationTransactionDelegate?
@@ -27,20 +27,13 @@ class GalaryViewController: BaseViewController {
         return collectionView.cellForItem(at: selectedVideoIdxPath) as? PhotoCollectionViewCell
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        fetchAssetService = .init(delegate: self, mediaType: mediaType)
-    }
-    
     override func loadView() {
         super.loadView()
+        title = mediaType.rawValue.addingSpacesBeforeCapitalised.capitalized
+        fetchAssetService = .init(delegate: self, mediaType: mediaType)
 
         navigationItem.largeTitleDisplayMode = .always
         collectionView.contentInset.top = headerView.frame.height
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
         collectionView.register(.init(nibName: .init(describing: PhotoCollectionViewCell.self), bundle: nil), forCellWithReuseIdentifier: .init(describing: PhotoCollectionViewCell.self))
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -52,9 +45,11 @@ class GalaryViewController: BaseViewController {
         if #available(iOS 14.0, *) {
             collectionView.isEditing = true
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         fetchAssetService.fetch()
-        title = "screen rec"
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -128,18 +123,16 @@ extension GalaryViewController: PHFetchManagerDelegate {
     
     func similiaritiesDictionary(assetArray: [PHAsset],
                                  completion: @escaping(_ dict: [String: [String]])->()) {
-        let photos = FileManagerService().similiaritiesData.photos ?? [:]
+        let photos = FileManagerService().similiaritiesData(type: self.mediaType).photos ?? [:]
         let photosArrayDB = photos.flatMap { (key: SimilarityDataBaseModel.AssetID, value: [SimilarityDataBaseModel.AssetID]) in
             [key] + value
         }
-//        let assetArray = assetArray.filter({ phAsset in
-//            !photosArrayDB.contains(where: {
-//                $0.localIdentifier == phAsset.localIdentifier
-//            })
-//        })
-        print(assetArray.count, " frewedas ", photos.count)
-        let force = true
-        if assetArray.isEmpty && !force {
+        let assetArray = assetArray.filter({ phAsset in
+            !photosArrayDB.contains(where: {
+                $0.localIdentifier == phAsset.localIdentifier
+            })
+        })
+        if assetArray.isEmpty {
             completion(.init(uniqueKeysWithValues: photos.compactMap({ (key: SimilarityDataBaseModel.AssetID, value: [SimilarityDataBaseModel.AssetID]) in
                 (key.localIdentifier, value.compactMap({
                     $0.localIdentifier
@@ -147,15 +140,15 @@ extension GalaryViewController: PHFetchManagerDelegate {
             })))
         } else {
             if #available(iOS 13.0, *) {
-                SimiliarDetectionService().buildSimilarAssetsDict(from: assetArray) { dict in
-                    var db = FileManagerService()
-                    var dbData = db.similiaritiesData.photos ?? [:]
+                SimiliarDetectionService(type: self.mediaType).buildSimilarAssetsDict(from: assetArray) { dict in
+                    let db = FileManagerService()
+                    var dbData = db.similiaritiesData(type: self.mediaType).photos ?? [:]
                     dict.forEach { (key: String, value: [String]) in
                         dbData.updateValue(value.compactMap({
                             .init(localIdentifier: $0)
                         }), forKey: .init(localIdentifier: key))
                     }
-//                    db.similiaritiesData.photos = dbData
+                    db.setSimiliarityData(type: self.mediaType, newValue: .init(photos: dbData))
                     completion(dict)
                 }
             } else {
@@ -166,13 +159,17 @@ extension GalaryViewController: PHFetchManagerDelegate {
     
     
     func didCompleteFetching() {
-        collectionData = [Array(_immutableCocoaArray: fetchAssetService.assets).compactMap({
-            .init(asset: .phAsset($0))
-        })]
-        DispatchQueue.main.async {
-            self.collectionView.reloadData()
+        if mediaType.needAnalizeAI {
+            photoSimiliaritiesCompletedAssetFetch()
+        } else {
+            collectionData = [Array(_immutableCocoaArray: fetchAssetService.assets).compactMap({
+                .init(asset: .phAsset($0))
+            })]
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
         }
-//        photoSimiliaritiesCompletedAssetFetch()
+        
     }
     
     func photoSimiliaritiesCompletedAssetFetch() {
