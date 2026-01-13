@@ -19,6 +19,11 @@ class VideoCompressorViewController: BaseViewController {
     }
     var count = 4
     
+    override func loadView() {
+        super.loadView()
+        loadVideoChild()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,9 +37,7 @@ class VideoCompressorViewController: BaseViewController {
             self.updateTableViewConstraints()
         })
         
-    }
-    
-    
+    }    
 
     func updateTableViewConstraints() {
         let constant = tableView.constraints.first(where: {
@@ -42,12 +45,32 @@ class VideoCompressorViewController: BaseViewController {
         })!
         constant.constant = tableView.contentSize.height + view.safeAreaInsets.bottom
         print(tableView.contentSize.height)
-        tableView.superview?.layoutIfNeeded()
-        tableView.superview?.setNeedsLayout()
-        view.layoutIfNeeded()
-        view.setNeedsLayout()
+        let animation = UIViewPropertyAnimator(duration: 0.23, curve: .linear) {
+            self.tableView.superview?.layoutIfNeeded()
+            self.tableView.superview?.setNeedsLayout()
+            self.view.layoutIfNeeded()
+            self.view.setNeedsLayout()
+        }
+        animation.startAnimation()
     }
 
+}
+
+fileprivate
+extension VideoCompressorViewController {
+    func loadVideoChild() {
+        let child = VideoPlayerViewController.configure()
+        videoContainerView.addSubview(child.view)
+        child.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            child.view.leadingAnchor.constraint(equalTo: child.view.superview!.leadingAnchor),
+            child.view.trailingAnchor.constraint(equalTo: child.view.superview!.trailingAnchor),
+            child.view.topAnchor.constraint(equalTo: child.view.superview!.topAnchor),
+            child.view.bottomAnchor.constraint(equalTo: child.view.superview!.bottomAnchor)
+        ])
+        self.addChild(child)
+        child.didMove(toParent: self)
+    }
 }
 
 extension VideoCompressorViewController: UITableViewDelegate, UITableViewDataSource {

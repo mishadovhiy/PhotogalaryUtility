@@ -89,6 +89,13 @@ extension GalaryViewController: UICollectionViewDelegate, UICollectionViewDataSo
             self.selectedVideoIdxPath = indexPath
             navigationTransaction = .init()
             navigationController?.delegate = navigationTransaction
+            let vc = VideoCompressorViewController.configure()
+            let data = collectionData[indexPath.section][indexPath.row]
+            switch data.asset {
+            case .phAsset(let asset):
+                vc.selectedAsset = asset
+            default: break
+            }
             navigationController?.pushViewController(VideoCompressorViewController.configure(), animated: true)
         default: break
             
