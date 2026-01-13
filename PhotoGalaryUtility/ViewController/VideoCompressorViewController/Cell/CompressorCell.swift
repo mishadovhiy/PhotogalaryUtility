@@ -8,16 +8,17 @@
 import UIKit
 
 class CompressorCell: UITableViewCell {
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    @IBOutlet private weak var compressedSizeLabel: UILabel!
+    @IBOutlet private weak var currentSizeLabel: UILabel!
+    
+    struct PresentationModel {
+        let currentSize: CGFloat
+        let compressedSize: CGFloat
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    func set(_ data: PresentationModel) {
+        compressedSizeLabel.text = "\(data.currentSize) MB"
+        currentSizeLabel.text = "\(data.compressedSize) MB"
     }
-
+    
 }

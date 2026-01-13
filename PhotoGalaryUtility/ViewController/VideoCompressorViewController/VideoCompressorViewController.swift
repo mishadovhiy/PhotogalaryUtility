@@ -18,6 +18,8 @@ class VideoCompressorViewController: BaseViewController {
         videoContainerView
     }
     var didCompress: Bool = false
+    var selectedCompression: CompressQualityType = .low
+    
     override var primaryButton: ButtonData? {
         if didCompress {
             return .init(title: "Keep Original Video", style: .primary)
@@ -91,13 +93,37 @@ extension VideoCompressorViewController {
 }
 
 extension VideoCompressorViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        count
+        switch section {
+        case 0:
+            return 1
+        case 1:
+            if didCompress {
+                return 0
+            } else {
+                return CompressQualityType.allCases.count
+            }
+        default: return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: .init(describing: CompressorCell.self), for: indexPath) as! CompressorCell
-        return cell
+        switch indexPath.section {
+        case 0:
+            let cell = tableView.dequeueReusableCell(withIdentifier: .init(describing: CompressorCell.self), for: indexPath) as! CompressorCell
+            cell.set(.init(currentSize: 100, compressedSize: 4))
+            return cell
+        case 1:
+            let cell = tableView.dequeueReusableCell(withIdentifier: .init(describing: ComressorQualityCell.self), for: indexPath) as! ComressorQualityCell
+            let type = CompressQualityType.allCases[indexPath.row]
+            cell.set(type: type, isSelected: type == self.selectedCompression)
+            return cell
+        default: return .init()
+        }
     }
 }
 

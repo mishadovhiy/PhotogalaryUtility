@@ -15,19 +15,22 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var checkmarkIndicator: UIImageView!
     @IBOutlet weak var bottomRightLabel: UILabel!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+    }
+    
     func set(_ data: GalaryItemPresentationModel) {
         switch data.asset {
         case .assetName(let name):
             self.imageView.image = .init(named: name)
         case .phAsset(let asset):
-            topLeftLabel.text = asset.localIdentifier
-            self.imageView.image = nil
+            break
         default:
             self.imageView.image = nil
         }
-        self.backgroundColor = .white
-        bottomRightLabel.superview?.superview?.isHidden = true
-        checkmarkIndicator.superview?.isHidden = true
-        topLeftLabel.superview?.isHidden = false
+        bottomRightLabel.superview?.superview?.isHidden = data.bottomLabel?.isEmpty ?? true
+        checkmarkIndicator.superview?.isHidden = !(data.checkmarkSelected ?? false)
+        topLeftLabel.superview?.isHidden = data.topLabel?.isEmpty ?? true
     }
 }

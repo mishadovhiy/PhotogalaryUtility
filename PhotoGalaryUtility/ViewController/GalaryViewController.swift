@@ -13,11 +13,13 @@ class GalaryViewController: BaseViewController {
     
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var filesCountLabel: UILabel!
     var fetchAssetService: PHFetchManager!
     var mediaType: MediaGroupType!
     var collectionData: [[GalaryItemPresentationModel]] = []
     var selectedVideoIdxPath: IndexPath?
     var navigationTransaction: NavigationTransactionDelegate?
+    var selectedAseetIDs: [String] = []
     
     override var navigationTransactionAnimatedView: UIView? {
         guard let selectedVideoIdxPath else {
@@ -45,6 +47,8 @@ class GalaryViewController: BaseViewController {
         if #available(iOS 14.0, *) {
             collectionView.isEditing = true
         }
+        loadTabBarItems()
+        setupHeaderItems()
     }
     
     override func viewDidLoad() {
@@ -57,6 +61,15 @@ class GalaryViewController: BaseViewController {
         navigationTransaction = nil
     }
     
+    var presentationModel: GalaryPresentationModel {
+        switch mediaType {
+        case .allVideos:
+                .init(needTotalStorageCalculation: false, needTotalItemCountCalculation: true, canSelectMultiple: false)
+        default:
+                .init(needTotalStorageCalculation: true, needTotalItemCountCalculation: true, canSelectMultiple: true)
+        }
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y + scrollView.contentInset.top + self.view.safeAreaInsets.top
         print(offsetY)
@@ -66,6 +79,10 @@ class GalaryViewController: BaseViewController {
         } else {
             //            self.additionalSafeAreaInsets.top = 0
         }
+    }
+    
+    @objc func toggleSelectionsDidPress(_ sender: UIButton) {
+        
     }
 }
 
@@ -79,20 +96,32 @@ extension GalaryViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let data = collectionData[indexPath.section][indexPath.row]
         switch self.mediaType {
-        case .similiarVideos:
+        case .allVideos:
             self.selectedVideoIdxPath = indexPath
             navigationTransaction = .init()
             navigationController?.delegate = navigationTransaction
             let vc = VideoCompressorViewController.configure()
-            let data = collectionData[indexPath.section][indexPath.row]
             switch data.asset {
             case .phAsset(let asset):
                 vc.selectedAsset = asset
             default: break
             }
             navigationController?.pushViewController(vc, animated: true)
-        default: break
+        default:
+            switch data.asset {
+            case .phAsset(let asset):
+                if self.selectedAseetIDs.contains(asset.localIdentifier) {
+                    selectedAseetIDs.removeAll(where: {
+                        $0 == asset.localIdentifier
+                    })
+                } else {
+                    selectedAseetIDs.append(asset.localIdentifier)
+                }
+                collectionView.reloadItems(at: [indexPath])
+            default: break
+            }
             
         }
         print(indexPath.row)
@@ -100,22 +129,62 @@ extension GalaryViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: .init(describing: PhotoCollectionViewCell.self), for: indexPath) as! PhotoCollectionViewCell
-        let data = collectionData[indexPath.section][indexPath.row]
-        cell.set(data)
+        var data = collectionData[indexPath.section][indexPath.row]
+
+        switch self.mediaType {
+        case .dublicatedPhotos, .similiarPhotos, .similiarVideos:
+            if indexPath.row == 0 {
+                data.bottomLabel = "Best"
+            }
+        case .allVideos:
+            data.topLabel = "10 MB"
+        default: break
+        }
         switch data.asset {
         case .phAsset(let asset):
+            if self.mediaType != .allVideos {
+                data.checkmarkSelected = self.selectedAseetIDs.contains(asset.localIdentifier)
+            }
             self.fetchAssetService.fetchThumb(asset) { image in
                 cell.imageView.image = image
             }
         default: break
         }
-        
+        cell.set(data)
+
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let height = collectionView.frame.width / 2 - 10
+        let height = collectionView.frame.width / 2
         return .init(width: height, height: height)
+    }
+}
+
+extension GalaryViewController {
+    func setupHeaderItems() {
+        (headerView as? UIStackView)?.arrangedSubviews.forEach { view in
+            view.backgroundColor = .white
+            view.layer.cornerRadius = 5
+            view.layer.shadowColor = UIColor.black.cgColor
+            view.layer.shadowOffset = .zero
+            view.layer.shadowRadius = 4
+            view.layer.shadowOpacity = 0.5
+        }
+    }
+    
+    func loadTabBarItems() {
+        let button = UIButton(type: .system)
+        button.setTitle("Edit", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .systemBlue
+        button.layer.cornerRadius = 8
+        button.contentEdgeInsets = UIEdgeInsets(top: 6, left: 12, bottom: 6, right: 12)
+
+        button.addTarget(self, action: #selector(toggleSelectionsDidPress(_:)), for: .touchUpInside)
+
+        let barButton = UIBarButtonItem(customView: button)
+        navigationItem.rightBarButtonItem = barButton
     }
 }
 
@@ -178,9 +247,10 @@ extension GalaryViewController: PHFetchManagerDelegate {
 }
 
 extension GalaryViewController {
-    struct PresentionModel {
-        //(height bigger when no)
-        let needSections: Bool
-        let needSize: Bool
+    struct GalaryPresentationModel {
+        let needTotalStorageCalculation: Bool
+        let needTotalItemCountCalculation: Bool
+        let canSelectMultiple: Bool
+        
     }
 }

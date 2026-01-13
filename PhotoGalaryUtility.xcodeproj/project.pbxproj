@@ -43,6 +43,8 @@
 		82D7061F2F16674D00169CF0 /* HomeGalaryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D7061E2F16674D00169CF0 /* HomeGalaryHeaderView.swift */; };
 		82D706242F1673E000169CF0 /* MediaTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D706232F1673E000169CF0 /* MediaTypeCell.swift */; };
 		82D706262F16784000169CF0 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D706252F16784000169CF0 /* String.swift */; };
+		82D706282F16B46400169CF0 /* ComressorQualityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D706272F16B46400169CF0 /* ComressorQualityCell.swift */; };
+		82D7062A2F16B48B00169CF0 /* CompressQualityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D706292F16B48B00169CF0 /* CompressQualityType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,6 +86,8 @@
 		82D7061E2F16674D00169CF0 /* HomeGalaryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGalaryHeaderView.swift; sourceTree = "<group>"; };
 		82D706232F1673E000169CF0 /* MediaTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTypeCell.swift; sourceTree = "<group>"; };
 		82D706252F16784000169CF0 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		82D706272F16B46400169CF0 /* ComressorQualityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComressorQualityCell.swift; sourceTree = "<group>"; };
+		82D706292F16B48B00169CF0 /* CompressQualityType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressQualityType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +222,7 @@
 			children = (
 				829BF0512F14EC46000FAE35 /* SimilarityDataBaseModel.swift */,
 				82C7D9C72F1571D300E2F0FA /* MediaGroupType.swift */,
+				82D706292F16B48B00169CF0 /* CompressQualityType.swift */,
 				826C1E092F135FA10095A600 /* DataModel */,
 			);
 			path = Model;
@@ -263,6 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				829BF03A2F13FA4F000FAE35 /* CompressorCell.swift */,
+				82D706272F16B46400169CF0 /* ComressorQualityCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -381,6 +387,7 @@
 				826C1DC52F1351490095A600 /* HomeNavigationController.swift in Sources */,
 				826C1DE12F1356640095A600 /* PHLibraryEditorManager.swift in Sources */,
 				826C1DF62F135B2F0095A600 /* ButtonData.swift in Sources */,
+				82D7062A2F16B48B00169CF0 /* CompressQualityType.swift in Sources */,
 				829BF0522F14EC46000FAE35 /* SimilarityDataBaseModel.swift in Sources */,
 				82D706262F16784000169CF0 /* String.swift in Sources */,
 				82C7D9C82F1571D300E2F0FA /* MediaGroupType.swift in Sources */,
@@ -397,6 +404,7 @@
 				82C7D9C62F156E4E00E2F0FA /* SimiliarDetectionService.swift in Sources */,
 				826C1DC32F1350880095A600 /* SceneDelegate.swift in Sources */,
 				826C1E132F1362BB0095A600 /* UITableViewCell+UICollectionViewCell.swift in Sources */,
+				82D706282F16B46400169CF0 /* ComressorQualityCell.swift in Sources */,
 				82D706132F15C09B00169CF0 /* NavigationTransactionDelegate.swift in Sources */,
 				829BF03B2F13FA4F000FAE35 /* CompressorCell.swift in Sources */,
 				826C1DE62F1356E40095A600 /* UIImage.swift in Sources */,

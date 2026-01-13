@@ -10,9 +10,9 @@ import Photos
 
 struct GalaryItemPresentationModel {
     let asset: AssetType
-    let checkmarkSelected: Bool?
-    let topLabel: String?
-    let bottomLabel: String?
+    var checkmarkSelected: Bool?
+    var topLabel: String?
+    var bottomLabel: String?
     
     var needCheckmarkIndicator: Bool {
         checkmarkSelected != nil
