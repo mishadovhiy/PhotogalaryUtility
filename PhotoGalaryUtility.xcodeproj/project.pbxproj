@@ -38,6 +38,8 @@
 		82C7D9C82F1571D300E2F0FA /* MediaGroupType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C7D9C72F1571D300E2F0FA /* MediaGroupType.swift */; };
 		82D706132F15C09B00169CF0 /* NavigationTransactionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D706122F15C09B00169CF0 /* NavigationTransactionDelegate.swift */; };
 		82D706172F160D4C00169CF0 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D706162F160D4C00169CF0 /* UINavigationController.swift */; };
+		82D706192F16360300169CF0 /* Reusable.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82D706182F16360300169CF0 /* Reusable.storyboard */; };
+		82D7061D2F16363C00169CF0 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82D7061C2F16363C00169CF0 /* Onboarding.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +76,8 @@
 		82C7D9C72F1571D300E2F0FA /* MediaGroupType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaGroupType.swift; sourceTree = "<group>"; };
 		82D706122F15C09B00169CF0 /* NavigationTransactionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTransactionDelegate.swift; sourceTree = "<group>"; };
 		82D706162F160D4C00169CF0 /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
+		82D706182F16360300169CF0 /* Reusable.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Reusable.storyboard; sourceTree = "<group>"; };
+		82D7061C2F16363C00169CF0 /* Onboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +111,8 @@
 			isa = PBXGroup;
 			children = (
 				826C1DB22F1350880095A600 /* Main.storyboard */,
+				82D706182F16360300169CF0 /* Reusable.storyboard */,
+				82D7061C2F16363C00169CF0 /* Onboarding.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -317,6 +323,8 @@
 			files = (
 				826C1DBD2F1350880095A600 /* Main.storyboard in Resources */,
 				826C1DFA2F135E130095A600 /* PhotoCollectionViewCell.xib in Resources */,
+				82D706192F16360300169CF0 /* Reusable.storyboard in Resources */,
+				82D7061D2F16363C00169CF0 /* Onboarding.storyboard in Resources */,
 				826C1DBE2F1350880095A600 /* Assets.xcassets in Resources */,
 				826C1DC02F1350880095A600 /* LaunchScreen.storyboard in Resources */,
 			);

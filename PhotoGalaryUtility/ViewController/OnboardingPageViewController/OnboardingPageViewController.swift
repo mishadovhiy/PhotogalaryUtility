@@ -27,3 +27,9 @@ class OnboardingPageViewController: UIPageViewController {
     */
 
 }
+
+extension OnboardingPageViewController {
+    static func configure() -> Self {
+        return self.configure(storyboardID: "Onboarding")
+    }
+}

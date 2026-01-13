@@ -26,4 +26,7 @@ class RefreshViewController: UIViewController {
     }
     */
 
+    static func configure() -> Self {
+        return self.configure(storyboardID: "Reusable")
+    }
 }

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Refresh View Controller-->
+        <scene sceneID="1IH-GD-Y9u">
+            <objects>
+                <viewController storyboardIdentifier="RefreshViewController" id="Aah-X6-Sqx" customClass="RefreshViewController" customModule="PhotoGalaryUtility" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="KjZ-cw-XCx">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Sbp-5J-5T6">
+                                <rect key="frame" x="178" y="407.66666666666669" width="37" height="37"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="MJO-He-Qof"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Sbp-5J-5T6" firstAttribute="centerY" secondItem="KjZ-cw-XCx" secondAttribute="centerY" id="HeG-me-AfA"/>
+                            <constraint firstItem="Sbp-5J-5T6" firstAttribute="centerX" secondItem="KjZ-cw-XCx" secondAttribute="centerX" id="sbI-Yr-a9E"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ijG-gp-Vdh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3681" y="635"/>
+        </scene>
+        <!--Video Player View Controller-->
+        <scene sceneID="Re3-pa-Pgn">
+            <objects>
+                <viewController storyboardIdentifier="VideoPlayerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="SZr-ui-V2E" customClass="VideoPlayerViewController" customModule="PhotoGalaryUtility" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="MN1-an-F6C">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="iQN-Ug-tXm"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Z4c-Jt-Sk2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2367" y="-227"/>
+        </scene>
+        <!--Video Compressor View Controller-->
+        <scene sceneID="1fN-iE-M38">
+            <objects>
+                <viewController storyboardIdentifier="VideoCompressorViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dQx-2i-bed" customClass="VideoCompressorViewController" customModule="PhotoGalaryUtility" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="f2T-FJ-p0j">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="oPQ-Gk-40u">
+                                <rect key="frame" x="0.0" y="118" width="393" height="734"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="inZ-Fo-ss0">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="606"/>
+                                        <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                    </view>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="PIs-Ft-5eV">
+                                        <rect key="frame" x="0.0" y="606" width="393" height="128"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="128" id="Yym-dr-Tcy"/>
+                                        </constraints>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CompressorCell" id="ocI-U8-9hW" customClass="CompressorCell" customModule="PhotoGalaryUtility" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="50" width="393" height="21.333333969116211"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ocI-U8-9hW" id="77L-13-rhO">
+                                                    <rect key="frame" x="0.0" y="0.0" width="393" height="21.333333969116211"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YU5-i4-j4P">
+                                                            <rect key="frame" x="15" y="0.0" width="363" height="21.333333333333332"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="YU5-i4-j4P" firstAttribute="leading" secondItem="77L-13-rhO" secondAttribute="leading" constant="15" id="M22-hq-2Jf"/>
+                                                        <constraint firstAttribute="trailing" secondItem="YU5-i4-j4P" secondAttribute="trailing" constant="15" id="i4j-6R-P2a"/>
+                                                        <constraint firstItem="YU5-i4-j4P" firstAttribute="top" secondItem="77L-13-rhO" secondAttribute="top" id="vBU-CN-zck"/>
+                                                        <constraint firstAttribute="bottom" secondItem="YU5-i4-j4P" secondAttribute="bottom" id="zYc-fw-NDg"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                            </tableViewCell>
+                                        </prototypes>
+                                    </tableView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="e9U-ji-3it"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="e9U-ji-3it" firstAttribute="trailing" secondItem="oPQ-Gk-40u" secondAttribute="trailing" id="U2X-YO-39k"/>
+                            <constraint firstItem="oPQ-Gk-40u" firstAttribute="leading" secondItem="e9U-ji-3it" secondAttribute="leading" id="WOA-i3-iSS"/>
+                            <constraint firstItem="oPQ-Gk-40u" firstAttribute="top" secondItem="e9U-ji-3it" secondAttribute="top" id="vGD-H9-HlN"/>
+                            <constraint firstAttribute="bottom" secondItem="oPQ-Gk-40u" secondAttribute="bottom" id="w1K-AS-Md5"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="PIs-Ft-5eV" id="2Vc-v0-vZr"/>
+                        <outlet property="videoContainerView" destination="inZ-Fo-ss0" id="vmN-MV-PQG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ir0-v9-BWS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1821" y="768"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

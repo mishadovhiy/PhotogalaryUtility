@@ -26,4 +26,7 @@ class OnboardingDetailViewController: UIViewController {
     }
     */
 
+    static func configure() -> Self {
+        return self.configure(storyboardID: "Onboarding")
+    }
 }

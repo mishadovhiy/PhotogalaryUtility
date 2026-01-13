@@ -93,3 +93,9 @@ extension VideoCompressorViewController: UITableViewDelegate, UITableViewDataSou
         return cell
     }
 }
+
+extension VideoCompressorViewController {
+    static func configure() -> Self {
+        return self.configure(storyboardID: "Reusable")
+    }
+}

@@ -83,3 +83,9 @@ fileprivate extension VideoPlayerViewController {
         vc.didMove(toParent: self)
     }
 }
+
+extension VideoPlayerViewController {
+    static func configure() -> Self {
+        return self.configure(storyboardID: "Reusable")
+    }
+}
