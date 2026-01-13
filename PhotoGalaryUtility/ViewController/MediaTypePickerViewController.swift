@@ -8,6 +8,8 @@
 import UIKit
 
 class MediaTypePickerViewController: UIViewController {
-    
+    static func configure() -> Self {
+        return self.configure(storyboardID: "Reusable")
+    }
 }
 

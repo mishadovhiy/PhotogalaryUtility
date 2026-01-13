@@ -48,6 +48,21 @@
             </objects>
             <point key="canvasLocation" x="2367" y="-227"/>
         </scene>
+        <!--Media Type Picker View Controller-->
+        <scene sceneID="Vtn-Us-kA8">
+            <objects>
+                <viewController storyboardIdentifier="MediaTypePickerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Zn7-fP-nO0" customClass="MediaTypePickerViewController" customModule="PhotoGalaryUtility" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Pv5-Fw-plZ">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Sq3-Gu-IMb"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ClY-cA-fwz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4107" y="-399"/>
+        </scene>
         <!--Video Compressor View Controller-->
         <scene sceneID="1fN-iE-M38">
             <objects>
