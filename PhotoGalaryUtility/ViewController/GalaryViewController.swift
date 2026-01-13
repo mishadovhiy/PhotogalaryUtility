@@ -9,16 +9,27 @@ import UIKit
 import Photos
 import Vision
 
-class GalaryViewController: UIViewController {
+class GalaryViewController: BaseViewController {
     
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     var fetchAssetService: PHFetchManager!
+    let mediaType: MediaGroupType = .similiarVideos
     var collectionData: [[GalaryItemPresentationModel]] = []
+    var selectedVideoIdxPath: IndexPath?
+    var navigationTransaction: NavigationTransactionDelegate?
+    
+    override var navigationTransactionAnimatedView: UIView? {
+        guard let selectedVideoIdxPath else {
+            return nil
+        }
+
+        return collectionView.cellForItem(at: selectedVideoIdxPath) as? PhotoCollectionViewCell
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        fetchAssetService = .init(delegate: self)
+        fetchAssetService = .init(delegate: self, mediaType: mediaType)
     }
     
     override func loadView() {
@@ -46,6 +57,10 @@ class GalaryViewController: UIViewController {
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationTransaction = nil
+    }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y + scrollView.contentInset.top + self.view.safeAreaInsets.top
@@ -69,6 +84,15 @@ extension GalaryViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch self.mediaType {
+        case .similiarVideos:
+            self.selectedVideoIdxPath = indexPath
+            navigationTransaction = .init()
+            navigationController?.delegate = navigationTransaction
+            navigationController?.pushViewController(VideoCompressorViewController.configure(), animated: true)
+        default: break
+            
+        }
         print(indexPath.row)
     }
     
@@ -135,13 +159,13 @@ extension GalaryViewController: PHFetchManagerDelegate {
     
     
     func didCompleteFetching() {
-//        collectionData = [Array(_immutableCocoaArray: fetchAssetService.assets).compactMap({
-//            .init(asset: .phAsset($0))
-//        })]
-//        DispatchQueue.main.async {
-//            self.collectionView.reloadData()
-//        }
-        photoSimiliaritiesCompletedAssetFetch()
+        collectionData = [Array(_immutableCocoaArray: fetchAssetService.assets).compactMap({
+            .init(asset: .phAsset($0))
+        })]
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+//        photoSimiliaritiesCompletedAssetFetch()
     }
     
     func photoSimiliaritiesCompletedAssetFetch() {

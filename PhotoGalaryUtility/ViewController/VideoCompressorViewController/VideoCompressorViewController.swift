@@ -6,10 +6,17 @@
 //
 
 import UIKit
+import Photos
 
-class VideoCompressorViewController: UIViewController {
+class VideoCompressorViewController: BaseViewController {
 
     @IBOutlet private var tableView: UITableView!
+    @IBOutlet weak var videoContainerView: UIView!
+    #warning("todo: fetch thumb and video")
+    var selectedAsset: PHAsset?
+    override var navigationTransactionTargetView: UIView? {
+        videoContainerView
+    }
     var count = 4
     
     override func viewDidLoad() {

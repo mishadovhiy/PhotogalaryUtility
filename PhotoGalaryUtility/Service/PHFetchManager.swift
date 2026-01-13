@@ -17,9 +17,10 @@ class PHFetchManager {
     var delegate: PHFetchManagerDelegate?
     var assets: PHFetchResult<PHAsset> = .init()
     private let imageManager = PHCachingImageManager()
-    
-    init(delegate: PHFetchManagerDelegate? = nil) {
+    let mediaType: MediaGroupType
+    init(delegate: PHFetchManagerDelegate? = nil, mediaType: MediaGroupType) {
         self.delegate = delegate
+        self.mediaType = mediaType
     }
     
     deinit {
