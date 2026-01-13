@@ -40,6 +40,7 @@
 		82D706172F160D4C00169CF0 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D706162F160D4C00169CF0 /* UINavigationController.swift */; };
 		82D706192F16360300169CF0 /* Reusable.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82D706182F16360300169CF0 /* Reusable.storyboard */; };
 		82D7061D2F16363C00169CF0 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82D7061C2F16363C00169CF0 /* Onboarding.storyboard */; };
+		82D7061F2F16674D00169CF0 /* HomeGalaryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D7061E2F16674D00169CF0 /* HomeGalaryHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +79,7 @@
 		82D706162F160D4C00169CF0 /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 		82D706182F16360300169CF0 /* Reusable.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Reusable.storyboard; sourceTree = "<group>"; };
 		82D7061C2F16363C00169CF0 /* Onboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
+		82D7061E2F16674D00169CF0 /* HomeGalaryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGalaryHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,7 +125,7 @@
 				826C1DC42F1351490095A600 /* HomeNavigationController.swift */,
 				826C1E102F13617E0095A600 /* GalaryViewController.swift */,
 				826C1E162F1363F50095A600 /* MediaTypePickerViewController.swift */,
-				826C1DFD2F135E720095A600 /* HomeGalaryViewController.swift */,
+				82D706202F16675A00169CF0 /* HomeGalaryViewController */,
 				829BF0392F13FA23000FAE35 /* VideoCompressorViewController */,
 				826C1E032F135EF80095A600 /* OnboardingPageViewController */,
 				826C1E0C2F13604C0095A600 /* ReusableViewController */,
@@ -260,6 +262,23 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		82D706202F16675A00169CF0 /* HomeGalaryViewController */ = {
+			isa = PBXGroup;
+			children = (
+				826C1DFD2F135E720095A600 /* HomeGalaryViewController.swift */,
+				82D706212F16676200169CF0 /* Cell */,
+			);
+			path = HomeGalaryViewController;
+			sourceTree = "<group>";
+		};
+		82D706212F16676200169CF0 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				82D7061E2F16674D00169CF0 /* HomeGalaryHeaderView.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -351,6 +370,7 @@
 				829BF0522F14EC46000FAE35 /* SimilarityDataBaseModel.swift in Sources */,
 				82C7D9C82F1571D300E2F0FA /* MediaGroupType.swift in Sources */,
 				826C1E172F1363F50095A600 /* MediaTypePickerViewController.swift in Sources */,
+				82D7061F2F16674D00169CF0 /* HomeGalaryHeaderView.swift in Sources */,
 				826C1E152F13637A0095A600 /* GalaryItemPresentationModel.swift in Sources */,
 				826C1E0E2F1360940095A600 /* VideoCompressorViewController.swift in Sources */,
 				826C1E112F13617E0095A600 /* GalaryViewController.swift in Sources */,

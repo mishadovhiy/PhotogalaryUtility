@@ -1,15 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "Vector.svg",
+      "filename" : "IMAGE 2025-04-10 16_40_14 1.pdf",
       "idiom" : "universal"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "template-rendering-intent" : "template"
   }
 }

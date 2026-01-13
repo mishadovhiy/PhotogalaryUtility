@@ -14,7 +14,7 @@ class GalaryViewController: BaseViewController {
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     var fetchAssetService: PHFetchManager!
-    let mediaType: MediaGroupType = .similiarVideos
+    var mediaType: MediaGroupType = .similiarVideos
     var collectionData: [[GalaryItemPresentationModel]] = []
     var selectedVideoIdxPath: IndexPath?
     var navigationTransaction: NavigationTransactionDelegate?

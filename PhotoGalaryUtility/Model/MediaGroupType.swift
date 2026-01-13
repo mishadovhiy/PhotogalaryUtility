@@ -11,4 +11,5 @@ enum MediaGroupType: String {
     case similiarPhotos
     case dublicatedPhotos
     case similiarVideos
+    case allVideos
 }

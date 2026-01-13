@@ -38,7 +38,9 @@ class HomeNavigationController: UINavigationController {
         DispatchQueue(label: "db", qos: .background).async {
             DispatchQueue.main.async {
                 DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
-                    self.setViewControllers([test ? GalaryViewController.configure() : OnboardingPageViewController.configure()], animated: true)
+//                    self.setViewControllers([test ? GalaryViewController.configure() : OnboardingPageViewController.configure()], animated: true)
+                    self.setViewControllers([HomeGalaryViewController.configure()], animated: true)
+
                 })
             }
         }
@@ -128,7 +130,7 @@ class HomeNavigationController: UINavigationController {
     
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         print(#function, " yhegtrfds")
-
+        self.setNavigationBarHidden(false, animated: true)
         super.pushViewController(viewController, animated: animated)
         self.setupButtons(topViewController: viewController)
 

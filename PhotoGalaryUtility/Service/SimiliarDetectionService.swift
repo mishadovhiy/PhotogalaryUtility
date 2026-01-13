@@ -129,15 +129,13 @@ class SimiliarDetectionService {
     }
     
     func fetchThumb(_ asset: PHAsset, completion:@escaping(_ image: [UIImage?])->()) {
-        
-        
-        
         switch self.type {
         case .similiarPhotos, .dublicatedPhotos:
             imageThumb(asset, completion: completion)
 
-        case .similiarVideos:
+        case .similiarVideos, .allVideos:
             videoThumbs(from: asset, completion: completion)
+            
         }
     }
     
