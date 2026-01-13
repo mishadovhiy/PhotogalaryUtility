@@ -51,7 +51,12 @@ fileprivate extension NavigationTransactionDelegate {
             cell.isHidden = true
             containerView.addSubview(toVC.view)
             containerView.addSubview(cellSnapshoot)
-            let destinationFrame = toVC.getTransactionAnimationView!.convert(toVC.getTransactionAnimationView!.bounds, to: containerView)
+            var destinationFrame = toVC.getTransactionAnimationView!.convert(toVC.getTransactionAnimationView!.bounds, to: containerView)
+            if isForward {
+                destinationFrame.origin.y += fromVC.view.safeAreaInsets.top
+                destinationFrame.size.height -= fromVC.view.safeAreaInsets.top
+            }
+            
             if isForward {
                 toVC.getTransactionAnimationView?.alpha = 0
             }

@@ -96,7 +96,7 @@ extension GalaryViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 vc.selectedAsset = asset
             default: break
             }
-            navigationController?.pushViewController(VideoCompressorViewController.configure(), animated: true)
+            navigationController?.pushViewController(vc, animated: true)
         default: break
             
         }

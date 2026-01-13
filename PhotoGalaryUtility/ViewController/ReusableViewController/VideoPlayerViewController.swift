@@ -20,13 +20,14 @@ class VideoPlayerViewController: UIViewController {
         self.loadVideoPlayer()
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func didMove(toParent parent: UIViewController?) {
+        super.didMove(toParent: parent)
         setPlayerItem()
     }
 
     func setPlayerItem() {
         guard let selectedAsset else {
+            print(String(describing: parent.self))
             return
         }
         let options = PHVideoRequestOptions()
@@ -39,11 +40,11 @@ class VideoPlayerViewController: UIViewController {
              options: options
          ) { playerItem, info in
              DispatchQueue.main.async {
-//                 completion(playerItem)
                  let vc = self.children.first(where: {
                      $0 is AVPlayerViewController
                  }) as? AVPlayerViewController
                  vc?.player = .init(playerItem: playerItem)
+                 vc?.player?.play()
              }
          }
     }
@@ -52,6 +53,10 @@ class VideoPlayerViewController: UIViewController {
 fileprivate extension VideoPlayerViewController {
     func loadVideoPlayer() {
         let vc = AVPlayerViewController()
+        if #available(iOS 14.2, *) {
+            vc.canStartPictureInPictureAutomaticallyFromInline = true
+        }
+        vc.updatesNowPlayingInfoCenter = true
         vc.allowsPictureInPicturePlayback = true
         vc.view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(vc.view)

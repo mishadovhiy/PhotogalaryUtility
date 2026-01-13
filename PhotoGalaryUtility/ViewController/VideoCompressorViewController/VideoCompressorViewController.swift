@@ -12,7 +12,6 @@ class VideoCompressorViewController: BaseViewController {
 
     @IBOutlet private var tableView: UITableView!
     @IBOutlet weak var videoContainerView: UIView!
-    #warning("todo: fetch thumb and video")
     var selectedAsset: PHAsset?
     override var navigationTransactionTargetView: UIView? {
         videoContainerView
@@ -21,6 +20,7 @@ class VideoCompressorViewController: BaseViewController {
     
     override func loadView() {
         super.loadView()
+        self.title = "Video Compressor"
         loadVideoChild()
     }
     
