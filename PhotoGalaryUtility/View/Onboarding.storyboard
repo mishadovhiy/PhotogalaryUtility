@@ -75,7 +75,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="childImaeOverlay" destination="tA8-4q-F6c" id="1Dk-vg-DFh"/>
+                        <outlet property="childImageOverlay" destination="tA8-4q-F6c" id="1Dk-vg-DFh"/>
                         <outlet property="descriptionLabel" destination="F4A-j3-5YU" id="dB2-qz-K2p"/>
                         <outlet property="titleLabel" destination="yc8-Qy-aWX" id="vPL-D7-RH5"/>
                     </connections>

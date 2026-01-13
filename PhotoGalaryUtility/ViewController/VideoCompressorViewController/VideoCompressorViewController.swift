@@ -10,6 +10,7 @@ import Photos
 
 class VideoCompressorViewController: BaseViewController {
 
+    @IBOutlet private weak var demoImageView: UIImageView!
     @IBOutlet private var tableView: UITableView!
     @IBOutlet weak var videoContainerView: UIView!
     var selectedAsset: PHAsset?
@@ -69,6 +70,12 @@ class VideoCompressorViewController: BaseViewController {
 fileprivate
 extension VideoCompressorViewController {
     func loadVideoChild() {
+        if self.selectedAsset == nil {
+            demoImageView.alpha = 1
+            return
+        } else {
+            demoImageView.alpha = 0
+        }
         let child = VideoPlayerViewController.configure()
         videoContainerView.addSubview(child.view)
         child.view.translatesAutoresizingMaskIntoConstraints = false

@@ -76,7 +76,19 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="inZ-Fo-ss0">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="606"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="10R-uP-3ff">
+                                                <rect key="frame" x="0.0" y="0.0" width="393" height="606"/>
+                                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                            </imageView>
+                                        </subviews>
                                         <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                        <constraints>
+                                            <constraint firstItem="10R-uP-3ff" firstAttribute="top" secondItem="inZ-Fo-ss0" secondAttribute="top" id="MDA-Dp-DKi"/>
+                                            <constraint firstAttribute="bottom" secondItem="10R-uP-3ff" secondAttribute="bottom" id="Nc4-Ti-2Nk"/>
+                                            <constraint firstItem="10R-uP-3ff" firstAttribute="leading" secondItem="inZ-Fo-ss0" secondAttribute="leading" id="Pqn-x7-C1r"/>
+                                            <constraint firstAttribute="trailing" secondItem="10R-uP-3ff" secondAttribute="trailing" id="hyv-ri-iNi"/>
+                                        </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="PIs-Ft-5eV">
                                         <rect key="frame" x="0.0" y="606" width="393" height="128"/>
@@ -122,6 +134,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="demoImageView" destination="10R-uP-3ff" id="Pzb-GK-vHb"/>
                         <outlet property="tableView" destination="PIs-Ft-5eV" id="2Vc-v0-vZr"/>
                         <outlet property="videoContainerView" destination="inZ-Fo-ss0" id="vmN-MV-PQG"/>
                     </connections>
@@ -137,6 +150,9 @@
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
