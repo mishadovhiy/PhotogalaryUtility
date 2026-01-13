@@ -9,7 +9,16 @@ import Foundation
 
 struct ButtonData {
     let title: String
-    var didPress: ()->()
+    let style: Style
+    let didPress: (()->())?
+    
+    init(title: String,
+         style: Style = .primary,
+         didPress: (()->())? = nil) {
+        self.title = title
+        self.style = style
+        self.didPress = didPress
+    }
 }
 
 extension ButtonData {

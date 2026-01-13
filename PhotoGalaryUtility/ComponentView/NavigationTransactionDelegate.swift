@@ -47,6 +47,7 @@ fileprivate extension NavigationTransactionDelegate {
             let cell = fromVC.getTransactionAnimationView!
             let cellSnapshoot = cell.snapshotView(afterScreenUpdates: false)!
             let startFrame = cell.convert(cell.bounds, to: containerView)
+            print(startFrame, " yegtrfsed ")
             cellSnapshoot.frame = startFrame
             cell.isHidden = true
             containerView.addSubview(toVC.view)
@@ -65,10 +66,16 @@ fileprivate extension NavigationTransactionDelegate {
 
             }
             animation.addCompletion { _ in
-                toVC.getTransactionAnimationView?.alpha = 1
-                cellSnapshoot.removeFromSuperview()
-                cell.isHidden = false
-                transating.completeTransition(true)
+                UIView.animate(withDuration: 0.3) {
+                    toVC.getTransactionAnimationView?.alpha = 1
+                    cellSnapshoot.alpha = 0
+                    cell.isHidden = false
+                } completion: { _ in
+                    cellSnapshoot.removeFromSuperview()
+                    transating.completeTransition(true)
+
+                }
+
             }
             animation.startAnimation()
         }

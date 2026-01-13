@@ -16,12 +16,22 @@ class VideoCompressorViewController: BaseViewController {
     override var navigationTransactionTargetView: UIView? {
         videoContainerView
     }
+    var didCompress: Bool = false
+    override var primaryButton: ButtonData? {
+        if didCompress {
+            return .init(title: "Keep Original Video", style: .primary)
+        } else {
+            return .init(title: "Compress")
+        }
+    }
     var count = 4
     
     override func loadView() {
         super.loadView()
         self.title = "Video Compressor"
         loadVideoChild()
+        videoContainerView.layer.cornerRadius = 5
+        videoContainerView.layer.masksToBounds = true
     }
     
     override func viewDidLoad() {

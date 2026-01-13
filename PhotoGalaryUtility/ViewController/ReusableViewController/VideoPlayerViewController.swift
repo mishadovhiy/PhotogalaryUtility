@@ -15,6 +15,12 @@ class VideoPlayerViewController: UIViewController {
         (parent as? VideoCompressorViewController)?.selectedAsset
     }
     
+    private var viewPlayerVC: AVPlayerViewController? {
+        children.first(where: {
+            $0 is AVPlayerViewController
+        }) as? AVPlayerViewController
+    }
+    
     override func loadView() {
         super.loadView()
         self.loadVideoPlayer()
@@ -23,6 +29,17 @@ class VideoPlayerViewController: UIViewController {
     override func didMove(toParent parent: UIViewController?) {
         super.didMove(toParent: parent)
         setPlayerItem()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if viewPlayerVC?.view.layer.name == "appeared" {
+            return
+        }
+        viewPlayerVC?.view.layer.name = "appeared"
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300), execute: {
+            self.viewPlayerVC?.player?.play()
+        })
     }
 
     func setPlayerItem() {
@@ -40,11 +57,7 @@ class VideoPlayerViewController: UIViewController {
              options: options
          ) { playerItem, info in
              DispatchQueue.main.async {
-                 let vc = self.children.first(where: {
-                     $0 is AVPlayerViewController
-                 }) as? AVPlayerViewController
-                 vc?.player = .init(playerItem: playerItem)
-                 vc?.player?.play()
+                 self.viewPlayerVC?.player = .init(playerItem: playerItem)
              }
          }
     }

@@ -163,6 +163,30 @@
             </objects>
             <point key="canvasLocation" x="1821" y="768"/>
         </scene>
+        <!--Refresh View Controller-->
+        <scene sceneID="g5k-Lu-jnk">
+            <objects>
+                <viewController storyboardIdentifier="RefreshViewController" id="04V-wf-Wpw" customClass="RefreshViewController" customModule="PhotoGalaryUtility" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Dbk-3Q-X0L">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="I6Q-jw-bYw">
+                                <rect key="frame" x="178" y="407.66666666666669" width="37" height="37"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="quo-6u-99l"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="I6Q-jw-bYw" firstAttribute="centerX" secondItem="Dbk-3Q-X0L" secondAttribute="centerX" id="1XU-eK-dMl"/>
+                            <constraint firstItem="I6Q-jw-bYw" firstAttribute="centerY" secondItem="Dbk-3Q-X0L" secondAttribute="centerY" id="fXl-Ge-yqg"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hll-5B-WEr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3681" y="635"/>
+        </scene>
         <!--Home Galary View Controller-->
         <scene sceneID="Qhk-FD-kHj">
             <objects>

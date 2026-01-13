@@ -8,7 +8,8 @@
 import UIKit
 
 class BaseViewController: UIViewController {
-    var nextButton: ButtonData? { nil }
+    var primaryButton: ButtonData? { nil }
+    var secondaryButton: ButtonData? { nil }
     var navigationTransactionAnimatedView: UIView? { nil }
     var navigationTransactionTargetView: UIView? { nil }
     
