@@ -35,12 +35,49 @@ class PHFetchManager {
         }
         let fetchOptions = PHFetchOptions()
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-        switch mediaType.assetType {
-        case .image:
-            assets = PHAsset.fetchAssets(with: .image, options: fetchOptions)
-        case .video:
-            assets = PHAsset.fetchAssets(with: .video, options: fetchOptions)
+        switch self.mediaType {
+        case .screenshots, .screenRecordings, .livePhotos:
+            let subtype: PHAssetCollectionSubtype?
+            switch self.mediaType {
+            case .screenshots:
+                subtype = .smartAlbumScreenshots
+            case .screenRecordings:
+                if #available(iOS 14, *) {
+                    subtype = .smartAlbumScreenRecordings
+                } else {
+                    subtype = nil
+                }
+            case .livePhotos:
+                subtype = .smartAlbumLivePhotos
+            default:
+                subtype = nil
+                
+            }
+            guard let subtype else {
+                return
+            }
+            let collections = PHAssetCollection.fetchAssetCollections(
+                with: .smartAlbum,
+                subtype: subtype,
+                options: nil
+            )
+
+            guard let screenshotsAlbum = collections.firstObject else {
+                return
+            }
+            assets = PHAsset.fetchAssets(
+                in: screenshotsAlbum,
+                options: fetchOptions
+            )
+        default:
+            switch mediaType.assetType {
+            case .image:
+                assets = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+            case .video:
+                assets = PHAsset.fetchAssets(with: .video, options: fetchOptions)
+            }
         }
+        
         delegate?.didCompleteFetching()
     }
 
