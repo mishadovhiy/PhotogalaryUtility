@@ -12,7 +12,7 @@ import UIKit
 class SimiliarDetectionService {
     let imageRequestOptions = PHImageRequestOptions()
     let videoRequestOptions = PHVideoRequestOptions()
-    let type: MediaGroupType
+    var type: MediaGroupType
     let imageWidth: CGFloat = 25
     
     init(type: MediaGroupType) {
@@ -23,11 +23,10 @@ class SimiliarDetectionService {
         imageRequestOptions.isNetworkAccessAllowed = true
         
         videoRequestOptions.isNetworkAccessAllowed = true
-
     }
     
     @available(iOS 13.0, *)
-    func similarity(_ a: [VNFeaturePrintObservation], _ b: [VNFeaturePrintObservation]) -> Float {
+    private func similarity(_ a: [VNFeaturePrintObservation], _ b: [VNFeaturePrintObservation]) -> Float {
         var distance: Float = 0
         let primaryArray = a.count >= b.count ? a : b
         let secondaryArray = primaryArray == a ? b : a
@@ -52,7 +51,7 @@ class SimiliarDetectionService {
         return distance / count
     }
 
-    func videoThumbs(
+    private func videoThumbs(
         from asset: PHAsset,
         completion: @escaping ([UIImage]) -> Void
     ) {
@@ -91,7 +90,7 @@ class SimiliarDetectionService {
     }
     
     @available(iOS 13.0, *)
-    func featurePrint(for asset: PHAsset, completion: @escaping ([VNFeaturePrintObservation]?) -> Void) {
+    private func featurePrint(for asset: PHAsset, completion: @escaping ([VNFeaturePrintObservation]?) -> Void) {
         fetchThumb(asset) { images in
             let totalCount = images.count
             var observations: [VNFeaturePrintObservation] = []
@@ -130,7 +129,7 @@ class SimiliarDetectionService {
         }
     }
     
-    func fetchThumb(_ asset: PHAsset, completion:@escaping(_ image: [UIImage?])->()) {
+    private func fetchThumb(_ asset: PHAsset, completion:@escaping(_ image: [UIImage?])->()) {
         switch self.type {
         case .similiarPhotos, .dublicatedPhotos:
             imageThumb(asset, completion: completion)
@@ -180,9 +179,11 @@ class SimiliarDetectionService {
     }
     
     @available(iOS 13.0, *)
-    func buildSimilarAssetsDict(from assets: [PHAsset], completion: @escaping ([String: [String]]) -> Void) {
+    func buildSimilarAssetsDict(type:MediaGroupType? = nil, from assets: [PHAsset], completion: @escaping ([String: [String]]) -> Void) {
         
-        
+        if let type {
+            self.type = type
+        }
         DispatchQueue(label: "db", qos: .userInitiated).async {
             self.featPrint(from: assets, featureDict: [:]) { featureDict in
                 self.group(featureDict) { dict in
@@ -213,7 +214,7 @@ class SimiliarDetectionService {
     }
     
     @available(iOS 13.0, *)
-    func featPrint(from assets: [PHAsset], featureDict:[PHAsset: [VNFeaturePrintObservation]], completion: @escaping ([PHAsset: [VNFeaturePrintObservation]]) -> Void) {
+    private func featPrint(from assets: [PHAsset], featureDict:[PHAsset: [VNFeaturePrintObservation]], completion: @escaping ([PHAsset: [VNFeaturePrintObservation]]) -> Void) {
         print(assets.count, " gerfedas ")
         if assets.isEmpty {
             completion(featureDict)

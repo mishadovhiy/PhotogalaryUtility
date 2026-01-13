@@ -124,37 +124,11 @@ extension GalaryViewController: PHFetchManagerDelegate {
     func similiaritiesDictionary(assetArray: [PHAsset],
                                  completion: @escaping(_ dict: [String: [String]])->()) {
         let photos = FileManagerService().similiaritiesData(type: self.mediaType).photos ?? [:]
-        let photosArrayDB = photos.flatMap { (key: SimilarityDataBaseModel.AssetID, value: [SimilarityDataBaseModel.AssetID]) in
-            [key] + value
-        }
-        let assetArray = assetArray.filter({ phAsset in
-            !photosArrayDB.contains(where: {
-                $0.localIdentifier == phAsset.localIdentifier
-            })
-        })
-        if assetArray.isEmpty {
-            completion(.init(uniqueKeysWithValues: photos.compactMap({ (key: SimilarityDataBaseModel.AssetID, value: [SimilarityDataBaseModel.AssetID]) in
-                (key.localIdentifier, value.compactMap({
-                    $0.localIdentifier
-                }))
-            })))
-        } else {
-            if #available(iOS 13.0, *) {
-                SimiliarDetectionService(type: self.mediaType).buildSimilarAssetsDict(from: assetArray) { dict in
-                    let db = FileManagerService()
-                    var dbData = db.similiaritiesData(type: self.mediaType).photos ?? [:]
-                    dict.forEach { (key: String, value: [String]) in
-                        dbData.updateValue(value.compactMap({
-                            .init(localIdentifier: $0)
-                        }), forKey: .init(localIdentifier: key))
-                    }
-                    db.setSimiliarityData(type: self.mediaType, newValue: .init(photos: dbData))
-                    completion(dict)
-                }
-            } else {
-                completion([:])
-            }
-        }
+        completion(.init(uniqueKeysWithValues: photos.compactMap({ (key: SimilarityDataBaseModel.AssetID, value: [SimilarityDataBaseModel.AssetID]) in
+            (key.localIdentifier, value.compactMap({
+                $0.localIdentifier
+            }))
+        })))
     }
     
     

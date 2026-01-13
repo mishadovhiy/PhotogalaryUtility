@@ -14,10 +14,12 @@ protocol PHFetchManagerDelegate {
 }
 
 class PHFetchManager {
+    
     var delegate: PHFetchManagerDelegate?
     var assets: PHFetchResult<PHAsset> = .init()
     private let imageManager = PHCachingImageManager()
-    let mediaType: MediaGroupType
+    var mediaType: MediaGroupType
+    
     init(delegate: PHFetchManagerDelegate? = nil, mediaType: MediaGroupType) {
         self.delegate = delegate
         self.mediaType = mediaType
@@ -27,7 +29,10 @@ class PHFetchManager {
         self.delegate = nil
     }
     
-    func fetch() {
+    func fetch(type: MediaGroupType? = nil) {
+        if let type {
+            mediaType = type
+        }
         let fetchOptions = PHFetchOptions()
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         switch mediaType.assetType {
