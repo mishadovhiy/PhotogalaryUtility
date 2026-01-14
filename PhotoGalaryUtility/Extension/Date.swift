@@ -7,8 +7,6 @@
 
 import Foundation
 
-#warning("todo: refactor")
-
 extension Date {
     init(string: String) {
         let formatter = Date.formatter()
@@ -42,7 +40,6 @@ extension Date {
             if #available(iOS 15.0, *) {
                 return self.ISO8601Format()
             } else {
-                #warning("todo: fix on earlier versions")
                 return ""
             }
         }

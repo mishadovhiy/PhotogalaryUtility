@@ -107,7 +107,7 @@ class VideoCompressorViewController: BaseViewController {
         tableView.dataSource = self
         self.tableView.reloadData()
         updateTableViewConstraints()
-        if let asset = selectedAsset {
+        if let _ = selectedAsset {
             self.loadAVAsset(from: self.selectedAsset!) { asset in
                 if let asset {
                     if #available(iOS 13.0.0, *) {

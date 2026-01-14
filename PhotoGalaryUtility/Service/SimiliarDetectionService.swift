@@ -219,7 +219,9 @@ class SimiliarDetectionService {
     
     @available(iOS 13.0, *)
     private func featPrint(from assets: [PHAsset], featureDict:[PHAsset: [VNFeaturePrintObservation]], completion: @escaping ([PHAsset: [VNFeaturePrintObservation]]) -> Void) {
+#if DEBUG
         print(assets.count, #file, #line, #function)
+#endif
         if assets.isEmpty {
             completion(featureDict)
         } else if let asset = assets.first {

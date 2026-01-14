@@ -29,7 +29,9 @@ struct FileManagerService {
             let dataModel = try JSONEncoder().encode(data)
             try dataModel.write(to: url, options: .atomic)
         } catch {
+            #if DEBUG
             print(error, " ", #function, #file, #line)
+            #endif
             return
         }
     }
@@ -68,7 +70,9 @@ struct FileManagerService {
             return result
         }
         catch {
+#if DEBUG
             print(error, " ", #function, #file, #line)
+            #endif
             return nil
         }
     }
