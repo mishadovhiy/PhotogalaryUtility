@@ -89,7 +89,8 @@ class PHFetchManager {
             }
         }
         
-        
+        print("fetchedd ", self.mediaType, " frwed", assets.count)
+
         delegate?.didCompleteFetching()
     }
     

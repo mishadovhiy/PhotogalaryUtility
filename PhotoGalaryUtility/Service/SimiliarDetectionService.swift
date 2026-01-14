@@ -166,7 +166,7 @@ class SimiliarDetectionService {
                 for (otherAsset, otherFeature) in featureDict {
                     if keyAsset == otherAsset { continue }
                     let distance = self.similarity(keyFeature, otherFeature)
-                    if distance <= 0.1 {
+                    if distance <= similirityDistance {
                         similar.append(otherAsset)
                     }
                 }
@@ -177,6 +177,15 @@ class SimiliarDetectionService {
         
         completion(result)
     }
+    
+    var similirityDistance: Float {
+        switch self.type {
+        case .similiarPhotos, .similiarVideos: 0.35
+        case .dublicatedPhotos: 0.1
+        default: 0
+        }
+    }
+    
     
     @available(iOS 13.0, *)
     func buildSimilarAssetsDict(type:MediaGroupType? = nil, from assets: [PHAsset], completion: @escaping ([String: [String]]) -> Void) {

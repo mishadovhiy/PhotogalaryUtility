@@ -59,21 +59,25 @@ struct HomeNavigationViewModel {
     }
     
     func didCompleteFetching() {
-        if !self.assetFetch.mediaType.needAnalizeAI {
-            DispatchQueue(label: "db", qos: .userInitiated).async {
-                var db = LocalDataBaseService.db
-                
-                db.metadataHelper.filesCount.updateValue(self.assetFetch.assets.count, forKey: self.assetFetch.mediaType)
-                LocalDataBaseService.db = db
+        DispatchQueue(label: "db", qos: .userInitiated).async {
+            let oldCount = LocalDataBaseService.db.metadataHelper.proccessedFilesCount[self.assetFetch.mediaType]
+            if oldCount != self.assetFetch.assets.count {
+                FileManagerService().writeData(SimilarityDataBaseModel(), type: .mediaGroupType(self.assetFetch.mediaType))
             }
-        }
-        if assetFetch.mediaType.needAnalizeAI {
-            photoSimiliaritiesCompletedAssetFetch()
-        } else {
-            DispatchQueue(label: "db", qos: .utility).async {
+            LocalDataBaseService.db.metadataHelper.proccessedFilesCount.updateValue(assetFetch.assets.count, forKey: self.assetFetch.mediaType)
+
+            if !self.assetFetch.mediaType.needAnalizeAI {
+                    var db = LocalDataBaseService.db
+                    db.metadataHelper.filesCount.updateValue(self.assetFetch.assets.count, forKey: self.assetFetch.mediaType)
+                    LocalDataBaseService.db = db
+            }
+            if assetFetch.mediaType.needAnalizeAI {
+                photoSimiliaritiesCompletedAssetFetch()
+            } else {
                 self.fetchSecondaryMedaTypes()
             }
         }
+        
     }
     
     func photoSimiliaritiesCompletedAssetFetch() {

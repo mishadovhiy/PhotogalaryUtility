@@ -26,6 +26,7 @@ class GalaryViewController: BaseViewController {
             (self.navigationController as? HomeNavigationController)?.setupButtons()
         }
     }
+    
     override var primaryButton: ButtonData? {
         if self.selectedAseetIDs.isEmpty {
             return nil
@@ -35,6 +36,7 @@ class GalaryViewController: BaseViewController {
             }
         }
     }
+    
     override var navigationTransactionAnimatedView: UIView? {
         guard let selectedVideoIdxPath else {
             return nil
@@ -80,6 +82,10 @@ class GalaryViewController: BaseViewController {
         }
         loadTabBarItems()
         setupHeaderItems()
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(didRefresh), for: .valueChanged)
+        collectionView.refreshControl = refreshControl
+        refreshControl.beginRefreshing()
     }
     
     override func viewDidLoad() {
@@ -101,6 +107,11 @@ class GalaryViewController: BaseViewController {
         default:
                 .init(needTotalStorageCalculation: true, needTotalItemCountCalculation: true, canSelectMultiple: true)
         }
+    }
+    
+    @objc func didRefresh(_ sender: UIRefreshControl) {
+        FileManagerService().writeData(SimilarityDataBaseModel(), type: .mediaGroupType(self.mediaType))
+        (self.navigationController as? HomeNavigationController)?.viewModel.assetFetch.fetch(type: self.mediaType)
     }
     
     @objc func toggleSelectionsDidPress(_ sender: UIButton) {
@@ -134,6 +145,7 @@ class GalaryViewController: BaseViewController {
             options: .transitionCrossDissolve,
             animations: {
                 self.collectionView.reloadData()
+                self.collectionView.refreshControl?.endRefreshing()
             }
         )
         updateSelectAllButton(sender: sender)
@@ -314,6 +326,7 @@ extension GalaryViewController: PHFetchManagerDelegate {
                 DispatchQueue.main.async {
                     self.filesCountLabel.text = "\(count) Files"
                     self.collectionView.reloadData()
+                    self.collectionView.refreshControl?.endRefreshing()
                 }
             }
         }
@@ -356,6 +369,7 @@ extension GalaryViewController: PHFetchManagerDelegate {
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                     self.filesCountLabel.text = "\(count) Files"
+                    self.collectionView.refreshControl?.endRefreshing()
                 }
             }
             

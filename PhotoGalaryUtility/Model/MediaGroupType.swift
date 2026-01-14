@@ -37,7 +37,7 @@ enum MediaGroupType: String, Codable, CaseIterable {
     
     var presentingOnPicker: Bool {
         switch self {
-        case .allVideos: false
+        case .allVideos, .allPhotos: false
         default: true
         }
     }

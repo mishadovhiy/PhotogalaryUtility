@@ -7,6 +7,7 @@
 
 import Foundation
 
+nonisolated
 struct SimilarityDataBaseModel: Codable {
     var photos: [AssetID: [AssetID]]?
     

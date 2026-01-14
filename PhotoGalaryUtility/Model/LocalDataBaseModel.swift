@@ -18,5 +18,6 @@ struct LocalDataBaseModel: Codable {
     struct MetadataHelper: Codable {
         var fileSizes: [MediaGroupType: CGFloat] = [:]
         var filesCount: [MediaGroupType: Int] = [:]
+        var proccessedFilesCount: [MediaGroupType: Int] = [:]
     }
 }
