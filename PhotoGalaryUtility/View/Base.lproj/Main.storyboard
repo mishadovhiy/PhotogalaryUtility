@@ -52,8 +52,9 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="rt7-ht-nuO">
                                                 <rect key="frame" x="8" y="4" width="137" height="24"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image" translatesAutoresizingMaskIntoConstraints="NO" id="5gG-0C-SOw">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="video" translatesAutoresizingMaskIntoConstraints="NO" id="5gG-0C-SOw">
                                                         <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                                        <color key="tintColor" name="DarkTextColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="24" id="NMz-Tc-SHt"/>
                                                             <constraint firstAttribute="height" constant="24" id="TOi-Va-gS3"/>
@@ -82,8 +83,9 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="qof-Gg-x29">
                                                 <rect key="frame" x="8" y="4" width="34" height="24"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image" translatesAutoresizingMaskIntoConstraints="NO" id="l6t-hu-8uB">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="storage" translatesAutoresizingMaskIntoConstraints="NO" id="l6t-hu-8uB">
                                                         <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                                        <color key="tintColor" name="DarkTextColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="24" id="a0c-YY-xiT"/>
                                                             <constraint firstAttribute="height" constant="24" id="ard-yc-kaC"/>
@@ -356,8 +358,9 @@
     </scenes>
     <resources>
         <image name="diclosure" width="16" height="16"/>
-        <image name="image" width="14" height="14"/>
         <image name="locker" width="14" height="14"/>
+        <image name="storage" width="24" height="24"/>
+        <image name="video" width="16" height="16"/>
         <namedColor name="BlueColor">
             <color red="0.52899998426437378" green="0.70200002193450928" blue="0.98400002717971802" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

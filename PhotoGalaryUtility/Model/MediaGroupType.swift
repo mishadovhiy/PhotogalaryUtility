@@ -43,6 +43,23 @@ enum MediaGroupType: String, Codable, CaseIterable {
     }
     
     var image: ImageResource {
-        .image
+        switch self {
+        case .dublicatedPhotos:
+                .image
+        case .similiarPhotos:
+                .video
+        case .screenshots:
+                .screenshots
+        case .livePhotos:
+                .lifePhotos
+        case .screenRecordings:
+                .screenRecordings
+        case .similiarVideos:
+                .video
+        case .allVideos:
+                .video
+        case .allPhotos:
+                .image
+        }
     }
 }
