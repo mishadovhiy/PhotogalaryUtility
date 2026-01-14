@@ -36,31 +36,40 @@ struct PHLibraryEditorManager {
             })
         }
     
-    func saveVideo(asset: AVAsset, completion: @escaping(Bool)->()) {
-        guard let export = AVAssetExportSession(asset: asset, presetName: AVAssetExportPreset1280x720) else {
+    
+    @available(iOS 13.0.0, *)
+    nonisolated func calcVideoSize(asset: AVAsset, quality: CompressQualityType) async -> Int64? {
+        guard let exportSession = await AVAssetExportSession(asset: asset, presetName: quality.presetName) else {
+            return nil
+        }
+        return try? await exportSession.estimatedOutputFileLengthInBytes 
+    }
+    
+    func saveVideo(asset: AVAsset, quality: CompressQualityType, completion: @escaping(Bool)->()) {
+        guard let export = AVAssetExportSession(asset: asset, presetName: quality.presetName) else {
             completion(false)
             return
         }
-
+        
         let url = FileManager.default.temporaryDirectory
             .appendingPathComponent(UUID().uuidString)
             .appendingPathExtension("mp4")
-
+        
         export.outputURL = url
         export.outputFileType = .mp4
         export.shouldOptimizeForNetworkUse = true
-
+        
         export.exportAsynchronously {
             guard export.status == .completed else {
                 completion(false)
                 return
             }
-
+            
             PHPhotoLibrary.shared().performChanges({
                 PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: url)
             }) { success, _ in
                 try? FileManager.default.removeItem(at: url)
-
+                
                 DispatchQueue.main.async {
                     completion(success)
                 }

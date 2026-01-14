@@ -87,7 +87,7 @@ class HomeNavigationController: UINavigationController {
                         button?.isHidden = data == nil
                     }
                     
-                    self.setButtonStyle(button, data: data)
+//                    self.setButtonStyle(button, data: data)
                     
                 }, completion: { _ in
                     if lastView == view {
@@ -111,9 +111,13 @@ class HomeNavigationController: UINavigationController {
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         switch data.style {
         case .link:
+            button.setTitleColor(.blue, for: .init())
+            button.titleLabel?.textColor = .blue
             button.tintColor = .blue
             button.backgroundColor = .clear
         case .primary:
+            button.titleLabel?.textColor = .white
+            button.setTitleColor(.white, for: .init())
             button.tintColor = .white
             button.backgroundColor = .blue
         }
@@ -189,9 +193,10 @@ extension HomeNavigationController {
             let button = UIButton()
             button.addTarget(self, action: #selector(buttonDidPress(_:)), for: .touchUpInside)
             button.tag = i
-            buttonsStack?.insertArrangedSubview(button, at: i)
+            buttonsStack?.insertArrangedSubview(button, at: 0)
             button.translatesAutoresizingMaskIntoConstraints = false
             button.heightAnchor.constraint(equalToConstant: 44 + (i == 0 ? 16 : 0)).isActive = true
+            self.setButtonStyle(button, data: nil)
         }
     }
     
