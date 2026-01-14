@@ -17,16 +17,19 @@ class ComressorQualityCell: UITableViewCell {
         super.awakeFromNib()
         checkmarkImageView.superview?.layer.cornerRadius = 12
         checkmarkImageView.superview?.layer.masksToBounds = true
-        checkmarkImageView.layer.borderColor = UIColor.accent.cgColor
-        checkmarkImageView.layer.borderWidth = 2
+        checkmarkImageView.superview?.layer.borderColor = UIColor.accent.cgColor
+        checkmarkImageView.superview?.layer.borderWidth = 2
         contentBackgroundView.backgroundColor = .white
         contentBackgroundView.layer.cornerRadius = 10
-        contentBackgroundView.layer.masksToBounds = true
+        contentBackgroundView.layer.shadowColor = UIColor.black.cgColor
+        contentBackgroundView.layer.shadowOffset = .zero
+        contentBackgroundView.layer.shadowRadius = 3.8
+        contentBackgroundView.layer.shadowOpacity = 0.15
     }
     
     func set(type: CompressQualityType, isSelected: Bool) {
         titleLabel.text = type.rawValue.capitalized
         checkmarkImageView.tintColor = isSelected ? .white : .accent
-        checkmarkImageView.backgroundColor = isSelected ? .accent : .clear
+        checkmarkImageView.superview?.backgroundColor = isSelected ? .accent : .clear
     }
 }

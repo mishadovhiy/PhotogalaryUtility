@@ -14,8 +14,8 @@
             filePath = "PhotoGalaryUtility/ViewController/HomeNavigationController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "156"
-            endingLineNumber = "156"
+            startingLineNumber = "240"
+            endingLineNumber = "240"
             landmarkName = "popToRootViewController(animated:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -30,8 +30,8 @@
             filePath = "PhotoGalaryUtility/ViewController/HomeNavigationController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "147"
-            endingLineNumber = "147"
+            startingLineNumber = "231"
+            endingLineNumber = "231"
             landmarkName = "pushViewController(_:animated:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -46,8 +46,8 @@
             filePath = "PhotoGalaryUtility/ViewController/HomeNavigationController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
+            startingLineNumber = "223"
+            endingLineNumber = "223"
             landmarkName = "setViewControllers(_:animated:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -62,8 +62,8 @@
             filePath = "PhotoGalaryUtility/ViewController/HomeNavigationController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
+            startingLineNumber = "214"
+            endingLineNumber = "214"
             landmarkName = "popViewController(animated:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -78,8 +78,8 @@
             filePath = "PhotoGalaryUtility/ViewController/HomeNavigationController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
+            startingLineNumber = "207"
+            endingLineNumber = "207"
             landmarkName = "popToViewController(_:animated:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -94,8 +94,8 @@
             filePath = "PhotoGalaryUtility/ViewController/HomeNavigationController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "30"
-            endingLineNumber = "30"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
             landmarkName = "loadView()"
             landmarkType = "7">
          </BreakpointContent>

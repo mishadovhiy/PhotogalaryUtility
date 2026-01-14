@@ -24,7 +24,18 @@ class VideoCompressorViewController: BaseViewController {
         if didCompress {
             return .init(title: "Keep Original Video", style: .primary)
         } else {
-            return .init(title: "Compress")
+            return .init(title: "Compress", didPress: {
+                let vc = RefreshViewController.configure()
+                vc.appearedAction = {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: {
+                        self.didCompress = true
+                        self.tableView.reloadData()
+
+                        vc.navigationController?.popViewController(animated: true)
+                    })
+                }
+                self.navigationController?.pushViewController(vc, animated: true)
+            })
         }
     }
     var count = 4
@@ -44,20 +55,19 @@ class VideoCompressorViewController: BaseViewController {
         tableView.dataSource = self
         self.tableView.reloadData()
         updateTableViewConstraints()
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
-            self.count = 7
-            self.tableView.reloadData()
-            self.updateTableViewConstraints()
-        })
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-    }    
+        updateTableViewConstraints()
+    }
 
     func updateTableViewConstraints() {
         let constant = tableView.constraints.first(where: {
             $0.firstAttribute == .height
         })!
-        constant.constant = tableView.contentSize.height + view.safeAreaInsets.bottom
-        print(tableView.contentSize.height)
+        constant.constant = tableView.contentSize.height + view.safeAreaInsets.bottom + self.additionalSafeAreaInsets.bottom
         let animation = UIViewPropertyAnimator(duration: 0.23, curve: .linear) {
             self.tableView.superview?.layoutIfNeeded()
             self.tableView.superview?.setNeedsLayout()
@@ -123,6 +133,13 @@ extension VideoCompressorViewController: UITableViewDelegate, UITableViewDataSou
             cell.set(type: type, isSelected: type == self.selectedCompression)
             return cell
         default: return .init()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 1 {
+            self.selectedCompression = CompressQualityType.allCases[indexPath.row]
+            tableView.reloadData()
         }
     }
 }

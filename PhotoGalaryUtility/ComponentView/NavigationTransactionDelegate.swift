@@ -11,6 +11,18 @@ class NavigationTransactionDelegate: NSObject, UIViewControllerAnimatedTransitio
     
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> (any UIViewControllerAnimatedTransitioning)? {
         self
+//        let array = [fromVC, toVC]
+//        let fromVC = array.first {
+//            ($0 as? BaseViewController)?.navigationTransactionAnimatedView != nil
+//        }
+//        let toVC = array.first {
+//            ($0 as? BaseViewController)?.navigationTransactionTargetView != nil
+//        }
+//        if fromVC != nil && toVC != nil {
+//            return self
+//        } else {
+//            return nil
+//        }
     }
     
     func transitionDuration(using transitionContext: (any UIViewControllerContextTransitioning)?) -> TimeInterval {

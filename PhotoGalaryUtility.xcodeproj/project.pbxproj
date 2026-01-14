@@ -34,6 +34,10 @@
 		829BF03B2F13FA4F000FAE35 /* CompressorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829BF03A2F13FA4F000FAE35 /* CompressorCell.swift */; };
 		829BF0522F14EC46000FAE35 /* SimilarityDataBaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829BF0512F14EC46000FAE35 /* SimilarityDataBaseModel.swift */; };
 		829BF0542F14ECB7000FAE35 /* FileManagerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829BF0532F14ECB7000FAE35 /* FileManagerService.swift */; };
+		82AED7F82F171949002CCD7F /* PHAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AED7F72F171949002CCD7F /* PHAsset.swift */; };
+		82AED80E2F1720A5002CCD7F /* LocalDataBaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AED80D2F1720A5002CCD7F /* LocalDataBaseService.swift */; };
+		82AED8102F172330002CCD7F /* LocalDataBaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AED80F2F172330002CCD7F /* LocalDataBaseModel.swift */; };
+		82AED8122F1724ED002CCD7F /* HomeNavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AED8112F1724ED002CCD7F /* HomeNavigationViewModel.swift */; };
 		82C7D9C62F156E4E00E2F0FA /* SimiliarDetectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C7D9C52F156E4E00E2F0FA /* SimiliarDetectionService.swift */; };
 		82C7D9C82F1571D300E2F0FA /* MediaGroupType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C7D9C72F1571D300E2F0FA /* MediaGroupType.swift */; };
 		82D706132F15C09B00169CF0 /* NavigationTransactionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D706122F15C09B00169CF0 /* NavigationTransactionDelegate.swift */; };
@@ -77,6 +81,10 @@
 		829BF03A2F13FA4F000FAE35 /* CompressorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressorCell.swift; sourceTree = "<group>"; };
 		829BF0512F14EC46000FAE35 /* SimilarityDataBaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarityDataBaseModel.swift; sourceTree = "<group>"; };
 		829BF0532F14ECB7000FAE35 /* FileManagerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerService.swift; sourceTree = "<group>"; };
+		82AED7F72F171949002CCD7F /* PHAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHAsset.swift; sourceTree = "<group>"; };
+		82AED80D2F1720A5002CCD7F /* LocalDataBaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataBaseService.swift; sourceTree = "<group>"; };
+		82AED80F2F172330002CCD7F /* LocalDataBaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataBaseModel.swift; sourceTree = "<group>"; };
+		82AED8112F1724ED002CCD7F /* HomeNavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationViewModel.swift; sourceTree = "<group>"; };
 		82C7D9C52F156E4E00E2F0FA /* SimiliarDetectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimiliarDetectionService.swift; sourceTree = "<group>"; };
 		82C7D9C72F1571D300E2F0FA /* MediaGroupType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaGroupType.swift; sourceTree = "<group>"; };
 		82D706122F15C09B00169CF0 /* NavigationTransactionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTransactionDelegate.swift; sourceTree = "<group>"; };
@@ -130,7 +138,7 @@
 		826C1DB52F1350880095A600 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				826C1DC42F1351490095A600 /* HomeNavigationController.swift */,
+				82AED8132F1724FF002CCD7F /* HomeNavigationController */,
 				826C1E102F13617E0095A600 /* GalaryViewController.swift */,
 				82D706222F1673C700169CF0 /* MediaTypePickerViewController */,
 				82D706202F16675A00169CF0 /* HomeGalaryViewController */,
@@ -166,6 +174,7 @@
 				826C1DE22F1356B20095A600 /* Date.swift */,
 				82D706252F16784000169CF0 /* String.swift */,
 				826C1DE52F1356E40095A600 /* UIImage.swift */,
+				82AED7F72F171949002CCD7F /* PHAsset.swift */,
 				826C1E122F1362BB0095A600 /* UITableViewCell+UICollectionViewCell.swift */,
 				82D706162F160D4C00169CF0 /* UINavigationController.swift */,
 			);
@@ -178,6 +187,7 @@
 				826C1DDE2F1356350095A600 /* PHFetchManager.swift */,
 				826C1DE02F1356640095A600 /* PHLibraryEditorManager.swift */,
 				82C7D9C52F156E4E00E2F0FA /* SimiliarDetectionService.swift */,
+				82AED80D2F1720A5002CCD7F /* LocalDataBaseService.swift */,
 				829BF0532F14ECB7000FAE35 /* FileManagerService.swift */,
 			);
 			path = Service;
@@ -223,6 +233,7 @@
 				829BF0512F14EC46000FAE35 /* SimilarityDataBaseModel.swift */,
 				82C7D9C72F1571D300E2F0FA /* MediaGroupType.swift */,
 				82D706292F16B48B00169CF0 /* CompressQualityType.swift */,
+				82AED80F2F172330002CCD7F /* LocalDataBaseModel.swift */,
 				826C1E092F135FA10095A600 /* DataModel */,
 			);
 			path = Model;
@@ -271,6 +282,15 @@
 				82D706272F16B46400169CF0 /* ComressorQualityCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		82AED8132F1724FF002CCD7F /* HomeNavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				826C1DC42F1351490095A600 /* HomeNavigationController.swift */,
+				82AED8112F1724ED002CCD7F /* HomeNavigationViewModel.swift */,
+			);
+			path = HomeNavigationController;
 			sourceTree = "<group>";
 		};
 		82D706202F16675A00169CF0 /* HomeGalaryViewController */ = {
@@ -392,16 +412,20 @@
 				82D706262F16784000169CF0 /* String.swift in Sources */,
 				82C7D9C82F1571D300E2F0FA /* MediaGroupType.swift in Sources */,
 				826C1E172F1363F50095A600 /* MediaTypePickerViewController.swift in Sources */,
+				82AED80E2F1720A5002CCD7F /* LocalDataBaseService.swift in Sources */,
 				82D7061F2F16674D00169CF0 /* HomeGalaryHeaderView.swift in Sources */,
+				82AED8102F172330002CCD7F /* LocalDataBaseModel.swift in Sources */,
 				826C1E152F13637A0095A600 /* GalaryItemPresentationModel.swift in Sources */,
 				826C1E0E2F1360940095A600 /* VideoCompressorViewController.swift in Sources */,
 				826C1E112F13617E0095A600 /* GalaryViewController.swift in Sources */,
 				826C1DFE2F135E720095A600 /* HomeGalaryViewController.swift in Sources */,
+				82AED7F82F171949002CCD7F /* PHAsset.swift in Sources */,
 				82D706242F1673E000169CF0 /* MediaTypeCell.swift in Sources */,
 				826C1E022F135EEB0095A600 /* OnboardingDetailViewController.swift in Sources */,
 				826C1DF32F135AF20095A600 /* BaseViewController.swift in Sources */,
 				826C1E0B2F1360480095A600 /* VideoPlayerViewController.swift in Sources */,
 				82C7D9C62F156E4E00E2F0FA /* SimiliarDetectionService.swift in Sources */,
+				82AED8122F1724ED002CCD7F /* HomeNavigationViewModel.swift in Sources */,
 				826C1DC32F1350880095A600 /* SceneDelegate.swift in Sources */,
 				826C1E132F1362BB0095A600 /* UITableViewCell+UICollectionViewCell.swift in Sources */,
 				82D706282F16B46400169CF0 /* ComressorQualityCell.swift in Sources */,

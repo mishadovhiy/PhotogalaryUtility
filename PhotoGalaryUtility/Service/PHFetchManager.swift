@@ -19,6 +19,7 @@ class PHFetchManager {
     var assets: PHFetchResult<PHAsset> = .init()
     private let imageManager = PHCachingImageManager()
     var mediaType: MediaGroupType
+    var fetchTotalSize: CGFloat = 0
     
     init(delegate: PHFetchManagerDelegate? = nil, mediaType: MediaGroupType) {
         self.delegate = delegate
@@ -77,6 +78,11 @@ class PHFetchManager {
                 assets = PHAsset.fetchAssets(with: .video, options: fetchOptions)
             }
         }
+        
+//        let array: [PHAsset] = Array(_immutableCocoaArray: assets)
+//        self.fetchTotalSize = array.reduce(0, { partialResult, asset in
+//            partialResult + asset.fileSize
+//        }).bytesToMegaBytes
         
         delegate?.didCompleteFetching()
     }

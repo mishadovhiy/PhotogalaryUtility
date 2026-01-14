@@ -32,7 +32,9 @@ class HomeGalaryViewController: UIViewController {
         if #available(iOS 13.0, *) {
             collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         }
-        loadStorageUsedProgressLayer()
+        loadStorageUsedProgressLayer(needPath: true)
+        loadStorageUsedProgressLayer(needPath: false)
+
     }
     
     override func viewDidLoad() {
@@ -44,6 +46,7 @@ class HomeGalaryViewController: UIViewController {
         storageText.append(.init(string: " " + "of 128.0 GB"))
         storageLabel.attributedText = storageText
         storageUsedPercentLabel.text = "44%"
+        setStoragePercentPath()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -55,6 +58,27 @@ class HomeGalaryViewController: UIViewController {
                 self.collectionView.contentInset.top = self.statisticView.frame.height
             }
         }
+    }
+    
+    func setStoragePercentPath() {
+        
+        let percent = 0.8
+        let startAngle: CGFloat = -.pi / 2
+        let endAngle = (startAngle + .pi) * percent
+        let radius: CGFloat = 40
+        let center = CGPoint(x: 50 + radius, y: 50 + radius)
+        
+        let path = UIBezierPath(
+            arcCenter: center,
+            radius: radius,
+            startAngle: -.pi / 2,
+            endAngle: .pi / 2,
+            clockwise: true
+        )
+        let layer = storageCyclePercentView.layer.sublayers?.first(where: {
+            $0 is CAShapeLayer && $0.name != "backgroundOval"
+        }) as? CAShapeLayer
+        layer?.path = path.cgPath
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -79,7 +103,7 @@ extension HomeGalaryViewController: UICollectionViewDelegate, UICollectionViewDa
         if count == 0 {
             return .init(width: 0, height: statisticView.frame.height)
         }
-        let height = collectionView.frame.width / 2 - 10
+        let height = collectionView.frame.width / 2 - 5
         let width = count == 1 ? collectionView.frame.width : height
         return .init(width: width, height: height)
     }
@@ -94,7 +118,6 @@ extension HomeGalaryViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let sectionData = collectionData[indexPath.section]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: .init(describing: PhotoCollectionViewCell.self), for: indexPath) as! PhotoCollectionViewCell
         cell.set(collectionData[indexPath.section].collectionData[indexPath.row])
         return cell
@@ -132,20 +155,24 @@ extension HomeGalaryViewController: UICollectionViewDelegate, UICollectionViewDa
 }
 
 extension HomeGalaryViewController {
-    func loadStorageUsedProgressLayer() {
-        let radius: CGFloat = 40
-        let center = CGPoint(x: 50, y: 50)
-
-        let path = UIBezierPath(
-            arcCenter: center,
-            radius: radius,
-            startAngle: -.pi / 2,
-            endAngle: .pi / 2,
-            clockwise: true
-        )
-
+    func loadStorageUsedProgressLayer(needPath: Bool) {
         let shapeLayer = CAShapeLayer()
-        shapeLayer.path = path.cgPath
+        if needPath {
+            let startAngle: CGFloat = -.pi / 2
+            let endAngle = (startAngle + .pi) * 1
+            let radius: CGFloat = 40
+            let center = CGPoint(x: 50 + radius, y: 50 + radius)
+            
+            let path = UIBezierPath(
+                arcCenter: center,
+                radius: radius,
+                startAngle: startAngle,
+                endAngle: endAngle,
+                clockwise: true
+            )
+            shapeLayer.name = "backgroundOval"
+            shapeLayer.path = path.cgPath
+        }
         shapeLayer.strokeColor = UIColor.systemBlue.cgColor
         shapeLayer.fillColor = UIColor.clear.cgColor
         shapeLayer.lineWidth = 8

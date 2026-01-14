@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum MediaGroupType: String, CaseIterable {
+enum MediaGroupType: String, Codable, CaseIterable {
     case dublicatedPhotos
     case similiarPhotos
     case screenshots
@@ -15,6 +15,7 @@ enum MediaGroupType: String, CaseIterable {
     case screenRecordings
     case similiarVideos
     case allVideos
+    case allPhotos
     
     var assetType: AssetType {
         switch self {

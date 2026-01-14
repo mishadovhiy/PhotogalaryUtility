@@ -24,4 +24,6 @@ class BaseViewController: UIViewController {
         appearedAction?()
         appearedAction = nil
     }
+    
+    func didCompleteSilimiaritiesProccessing() { }
 }

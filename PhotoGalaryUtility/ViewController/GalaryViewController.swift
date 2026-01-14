@@ -39,6 +39,8 @@ class GalaryViewController: BaseViewController {
         collectionView.register(.init(nibName: .init(describing: PhotoCollectionViewCell.self), bundle: nil), forCellWithReuseIdentifier: .init(describing: PhotoCollectionViewCell.self))
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.allowsSelection = true
+        collectionView.delaysContentTouches = true
         collectionView.allowsMultipleSelection = true
         collectionView.isMultipleTouchEnabled = true
         if #available(iOS 13.0, *) {
@@ -53,7 +55,9 @@ class GalaryViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchAssetService.fetch()
+        DispatchQueue(label: "phAssets", qos: .background).async {
+            self.fetchAssetService.fetch()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -72,17 +76,44 @@ class GalaryViewController: BaseViewController {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y + scrollView.contentInset.top + self.view.safeAreaInsets.top
-        print(offsetY)
 #warning("todo: update header constraint")
-        if offsetY <= 0 {
-            //            self.additionalSafeAreaInsets.top = offsetY * -1
-        } else {
-            //            self.additionalSafeAreaInsets.top = 0
-        }
+
     }
     
     @objc func toggleSelectionsDidPress(_ sender: UIButton) {
-        
+        if sender.tag == 0 {
+            sender.tag = 1
+            let new: [PHAsset] = Array(_immutableCocoaArray: self.fetchAssetService.assets)
+            selectedAseetIDs = new.compactMap({
+                $0.localIdentifier
+            })
+        } else {
+            sender.tag = 0
+            selectedAseetIDs.removeAll()
+        }
+        UIView.transition(
+            with: collectionView,
+            duration: 0.25,
+            options: .transitionCrossDissolve,
+            animations: {
+                self.collectionView.reloadData()
+            }
+        )
+        updateSelectAllButton(sender: sender)
+    }
+    
+    func updateSelectAllButton(sender: UIButton) {
+        sender.setTitle(sender.tag == 1 ? "Deselect All" : "Select All", for: .init())
+    }
+    
+    func checkSelectionCount() {
+        if selectedAseetIDs.count == fetchAssetService.assets.count {
+            guard let sender = navigationItem.rightBarButtonItem?.customView as? UIButton else {
+                return
+            }
+            sender.tag = 1
+            updateSelectAllButton(sender: sender)
+        }
     }
 }
 
@@ -96,6 +127,7 @@ extension GalaryViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath, " gefds ")
         let data = collectionData[indexPath.section][indexPath.row]
         switch self.mediaType {
         case .allVideos:
@@ -120,6 +152,7 @@ extension GalaryViewController: UICollectionViewDelegate, UICollectionViewDataSo
                     selectedAseetIDs.append(asset.localIdentifier)
                 }
                 collectionView.reloadItems(at: [indexPath])
+                self.checkSelectionCount()
             default: break
             }
             
@@ -151,7 +184,8 @@ extension GalaryViewController: UICollectionViewDelegate, UICollectionViewDataSo
         default: break
         }
         cell.set(data)
-
+        cell.isMultipleTouchEnabled = true
+    
         return cell
     }
     
@@ -163,27 +197,40 @@ extension GalaryViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
 extension GalaryViewController {
     func setupHeaderItems() {
-        (headerView as? UIStackView)?.arrangedSubviews.forEach { view in
+        var array = (headerView as? UIStackView)?.arrangedSubviews ?? []
+        if let view = navigationItem.rightBarButtonItem?.customView {
+            array.append(view)
+        }
+        array.forEach { view in
             view.backgroundColor = .white
             view.layer.cornerRadius = 5
             view.layer.shadowColor = UIColor.black.cgColor
             view.layer.shadowOffset = .zero
             view.layer.shadowRadius = 4
-            view.layer.shadowOpacity = 0.5
+            view.layer.shadowOpacity = 0.22
         }
     }
     
     func loadTabBarItems() {
+        if self.mediaType == .allVideos {
+            return
+        }
         let button = UIButton(type: .system)
-        button.setTitle("Edit", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 8
+        button.setTitle("Select All", for: .init())
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.titleLabel?.minimumScaleFactor = 0.2
+        button.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
+        button.setTitleColor(.darkText, for: .init())
         button.contentEdgeInsets = UIEdgeInsets(top: 6, left: 12, bottom: 6, right: 12)
-
+        button.tag = 0
         button.addTarget(self, action: #selector(toggleSelectionsDidPress(_:)), for: .touchUpInside)
 
         let barButton = UIBarButtonItem(customView: button)
+        
+        if #available(iOS 26.0, *) {
+            barButton.style = .prominent
+            barButton.hidesSharedBackground = true
+        }
         navigationItem.rightBarButtonItem = barButton
     }
 }
@@ -202,16 +249,26 @@ extension GalaryViewController: PHFetchManagerDelegate {
     
     
     func didCompleteFetching() {
-        if mediaType.needAnalizeAI {
-            photoSimiliaritiesCompletedAssetFetch()
-        } else {
-            collectionData = [Array(_immutableCocoaArray: fetchAssetService.assets).compactMap({
-                .init(asset: .phAsset($0))
-            })]
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
+        DispatchQueue(label: "db", qos: .userInitiated).async { [weak self] in
+            guard let self else {
+                return
+            }
+            var db = LocalDataBaseService.db
+            db.metadataHelper.fileSizes.updateValue(self.fetchAssetService.fetchTotalSize, forKey: self.fetchAssetService.mediaType)
+            db.metadataHelper.filesCount.updateValue(self.fetchAssetService.assets.count, forKey: self.fetchAssetService.mediaType)
+            LocalDataBaseService.db = db
+            if mediaType.needAnalizeAI {
+                photoSimiliaritiesCompletedAssetFetch()
+            } else {
+                collectionData = [Array(_immutableCocoaArray: fetchAssetService.assets).compactMap({
+                    .init(asset: .phAsset($0))
+                })]
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
             }
         }
+        
         
     }
     

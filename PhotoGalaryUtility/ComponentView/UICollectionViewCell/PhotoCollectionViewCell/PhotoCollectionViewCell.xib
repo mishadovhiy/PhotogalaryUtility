@@ -6,7 +6,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -55,7 +54,7 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="5KI-Ch-VvW">
                                                         <rect key="frame" x="8" y="4" width="52" height="17"/>
                                                         <subviews>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gwj-6I-ugp">
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ai" translatesAutoresizingMaskIntoConstraints="NO" id="gwj-6I-ugp">
                                                                 <rect key="frame" x="0.0" y="0.0" width="17" height="17"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" secondItem="gwj-6I-ugp" secondAttribute="height" multiplier="1:1" id="hhF-mJ-VZK"/>
@@ -73,7 +72,7 @@
                                                         </subviews>
                                                     </stackView>
                                                 </subviews>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <color key="backgroundColor" name="LightColor"/>
                                                 <constraints>
                                                     <constraint firstItem="5KI-Ch-VvW" firstAttribute="top" secondItem="lbP-3Q-6IT" secondAttribute="top" constant="4" id="3JO-wm-YwH"/>
                                                     <constraint firstAttribute="trailing" secondItem="5KI-Ch-VvW" secondAttribute="trailing" constant="8" id="E1D-i3-HgM"/>
@@ -88,11 +87,12 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cSH-oD-rEJ">
                                                 <rect key="frame" x="199" y="0.0" width="25" height="25"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kRm-7B-CA9">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="kRm-7B-CA9">
                                                         <rect key="frame" x="6" y="6" width="13" height="13"/>
+                                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </imageView>
                                                 </subviews>
-                                                <color key="backgroundColor" systemColor="systemYellowColor"/>
+                                                <color key="backgroundColor" name="DarkBlueColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="bottom" secondItem="kRm-7B-CA9" secondAttribute="bottom" constant="6" id="7Cr-tZ-I44"/>
                                                     <constraint firstAttribute="trailing" secondItem="kRm-7B-CA9" secondAttribute="trailing" constant="6" id="86P-Dk-tny"/>
@@ -135,14 +135,16 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="ai" width="12" height="14"/>
+        <image name="checkmark" width="11" height="11"/>
         <namedColor name="AccentColor">
             <color red="0.28627450980392155" green="0.3529411764705882" blue="0.9137254901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemYellowColor">
-            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
+        <namedColor name="DarkBlueColor">
+            <color red="0.28627450980392155" green="0.3529411764705882" blue="0.9137254901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="LightColor">
+            <color red="0.99607843137254903" green="0.99607843137254903" blue="0.99607843137254903" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

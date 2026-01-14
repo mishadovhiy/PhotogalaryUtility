@@ -7,13 +7,15 @@
 
 import UIKit
 
-class MediaTypePickerViewController: UIViewController {
+class MediaTypePickerViewController: BaseViewController {
    
     @IBOutlet private weak var collectionView: UICollectionView!
     let collectionData: [MediaGroupType] = MediaGroupType.allCases.filter({
         $0.presentingOnPicker
     })
-    
+    var db: LocalDataBaseModel?
+    let fileManager: FileManagerService = .init()
+    var fileManagerFileCounts: [MediaGroupType: Int] = [:]
     override func loadView() {
         super.loadView()
         title = "Media"
@@ -22,6 +24,33 @@ class MediaTypePickerViewController: UIViewController {
         collectionView.contentInset.left = 16
         collectionView.contentInset.right = 16
 
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        didCompleteSilimiaritiesProccessing()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        didCompleteSilimiaritiesProccessing()
+    }
+    
+    override func didCompleteSilimiaritiesProccessing() {
+        super.didCompleteSilimiaritiesProccessing()
+        DispatchQueue(label: "db", qos: .background).async {
+            self.db = LocalDataBaseService.db
+            MediaGroupType.allCases.forEach { type in
+                let fileManagerDict = self.fileManager.similiaritiesData(type: type).photos ?? [:]
+                let combinedArray = fileManagerDict.flatMap { (key, values) in
+                    [key] + values
+                }
+                self.fileManagerFileCounts.updateValue(combinedArray.count, forKey: type)
+            }
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
     }
 }
 
@@ -32,7 +61,14 @@ extension MediaTypePickerViewController: UICollectionViewDelegate, UICollectionV
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: .init(describing: MediaTypeCell.self), for: indexPath) as! MediaTypeCell
-        cell.set(type: collectionData[indexPath.row], dataCount: 1786)
+        let type = collectionData[indexPath.row]
+        let count: Int
+        if type.needAnalizeAI {
+            count = self.fileManagerFileCounts[type] ?? 0
+        } else {
+            count = db?.metadataHelper.filesCount[type] ?? 0
+        }
+        cell.set(type: collectionData[indexPath.row], dataCount: count)
         return cell
     }
     
