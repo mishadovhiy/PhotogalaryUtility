@@ -13,7 +13,6 @@ class OnboardingPageViewController: UIPageViewController {
     
     var primaryData: ButtonData {
         .init(title: "Continioue", style: .primary) {
-            print((self.viewControllers?.first?.view.tag ?? 0), " frewdqfw")
             if (self.viewControllers?.first?.view.tag ?? 0) + 1 >= self.pageData.count {
                 let navigation = self.navigationController as? HomeNavigationController
                 navigation?.setRefreshing {

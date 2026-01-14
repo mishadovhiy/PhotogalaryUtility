@@ -55,7 +55,6 @@ class SimiliarDetectionService {
         from asset: PHAsset,
         completion: @escaping ([UIImage]) -> Void
     ) {
-        print(asset.creationDate, " regfsdf ", asset.localIdentifier)
         PHImageManager.default().requestAVAsset(forVideo: asset, options: videoRequestOptions) { avAsset, _, _ in
             let frameCount: Int = 5
 
@@ -103,7 +102,6 @@ class SimiliarDetectionService {
                     return
                 }
                 let request = VNGenerateImageFeaturePrintRequest { request, error in
-                    print(error?.localizedDescription, " fdsfdfds")
                     guard let observation = request.results?.first as? VNFeaturePrintObservation else {
                         
                         if i + 1 == totalCount {
@@ -143,14 +141,12 @@ class SimiliarDetectionService {
     
     private func imageThumb(_ asset: PHAsset, completion:@escaping(_ image: [UIImage?])->()) {
         let sizeWidth: CGFloat = imageWidth
-        print("requestimage")
         PHImageManager.default().requestImage(
             for: asset,
             targetSize: .init(width: sizeWidth, height: sizeWidth),
             contentMode: .aspectFill,
             options: imageRequestOptions
         ) { image, error in
-            print("requestimagecompletion")
 
             completion([image?.changeSize(newWidth: sizeWidth)])
         }
@@ -196,7 +192,6 @@ class SimiliarDetectionService {
         DispatchQueue(label: "db", qos: .userInitiated).async {
             self.featPrint(from: assets, featureDict: [:]) { featureDict in
                 self.group(featureDict) { dict in
-//                    let dict = self.removeKeysContainedInValues(dict)
                     completion(.init(uniqueKeysWithValues: dict.compactMap({
                         ($0.key.localIdentifier, $0.value.compactMap({
                             $0.localIdentifier
@@ -224,7 +219,7 @@ class SimiliarDetectionService {
     
     @available(iOS 13.0, *)
     private func featPrint(from assets: [PHAsset], featureDict:[PHAsset: [VNFeaturePrintObservation]], completion: @escaping ([PHAsset: [VNFeaturePrintObservation]]) -> Void) {
-        print(assets.count, " gerfedas ")
+        print(assets.count, #file, #line, #function)
         if assets.isEmpty {
             completion(featureDict)
         } else if let asset = assets.first {

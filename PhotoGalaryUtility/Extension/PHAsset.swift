@@ -12,7 +12,6 @@ extension PHAsset {
     var fileSize: Int64 {
         let resources = PHAssetResource.assetResources(for: self)
         let filterTargetResurces: [PHAssetResourceType]
-        print(self.duration, " wfeasdfafsd ")
         if self.duration == .zero  {
             filterTargetResurces = [.photo, .alternatePhoto, .alternatePhoto, .fullSizePhoto, .adjustmentBasePhoto]
         } else {

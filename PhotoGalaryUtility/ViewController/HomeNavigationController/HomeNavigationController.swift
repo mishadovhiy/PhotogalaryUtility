@@ -131,14 +131,11 @@ class HomeNavigationController: UINavigationController {
     }
     
     override func popToViewController(_ viewController: UIViewController, animated: Bool) -> [UIViewController]? {
-        print(#function, " yhegtrfds")
         self.setupButtons(topViewController: viewController)
         return super.popToViewController(viewController, animated: animated)
     }
     
     override func popViewController(animated: Bool) -> UIViewController? {
-        print(#function, " yhegtrfds")
-
         let vc = super.popViewController(animated: animated)
         self.setupButtons()
         return vc
@@ -146,15 +143,12 @@ class HomeNavigationController: UINavigationController {
     }
     
     override func setViewControllers(_ viewControllers: [UIViewController], animated: Bool) {
-        print(#function, " yhegtrfds")
-
         self.setupButtons(topViewController: viewControllers.last)
         super.setViewControllers(viewControllers, animated: animated)
 
     }
     
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
-        print(#function, " yhegtrfds")
         self.setNavigationBarHidden(false, animated: true)
         super.pushViewController(viewController, animated: animated)
         self.setupButtons(topViewController: viewController)
@@ -162,8 +156,6 @@ class HomeNavigationController: UINavigationController {
     }
     
     override func popToRootViewController(animated: Bool) -> [UIViewController]? {
-        print(#function, " yhegtrfds")
-
         let vc = super.popToRootViewController(animated: animated)
         self.setupButtons(topViewController: vc?.last)
         return vc
@@ -172,7 +164,6 @@ class HomeNavigationController: UINavigationController {
     @objc private func buttonDidPress(_ sender: UIButton) {
         let vc = (viewControllers.last as? BaseViewController)
         let data = [vc?.primaryButton ?? (viewControllers.last as? OnboardingPageViewController)?.primaryData, vc?.secondaryButton][sender.tag]
-        print(data, " refwda ", vc?.primaryButton)
         data?.didPress?()
     }
 }

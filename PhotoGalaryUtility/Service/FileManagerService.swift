@@ -17,7 +17,6 @@ struct FileManagerService {
     
     func writeData(_ data: Codable, type: DataType) {
         guard let dir = localURL else {
-            print("iCloud not available")
             return
         }
         let url = dir.appendingPathComponent(type.rawValue)
@@ -58,14 +57,12 @@ struct FileManagerService {
     
     func load(type: DataType) -> Codable? {
         guard let dir = localURL else {
-            print("iCloud not available")
             return nil
         }
 
         let url = dir.appendingPathComponent(type.rawValue)
         do {
             let data = try Data(contentsOf: url)
-//            let response = try JSONDecoder().decode(type.responseType.self, from: data)
             
             let result = try JSONDecoder().decode(type.responseType.self, from: data)
             return result

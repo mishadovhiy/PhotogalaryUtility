@@ -222,7 +222,6 @@ extension GalaryViewController: UICollectionViewDelegate, UICollectionViewDataSo
             }
             
         }
-        print(indexPath.row)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

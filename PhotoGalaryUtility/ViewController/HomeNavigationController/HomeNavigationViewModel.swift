@@ -65,7 +65,6 @@ class HomeNavigationViewModel {
             guard let self else {
                 return
             }
-            print(assetFetch.mediaType, " fddasasd ", assetFetch.fetchTotalSize)
             let oldCount = LocalDataBaseService.db.metadataHelper.proccessedFilesCount[self.assetFetch.mediaType]
             if oldCount != self.assetFetch.assets.count {
                 FileManagerService().writeData(SimilarityDataBaseModel(), type: .mediaGroupType(self.assetFetch.mediaType))
@@ -111,13 +110,11 @@ class HomeNavigationViewModel {
         })
         let index = mediaTypes.firstIndex(of: self.assetFetch.mediaType) ?? 0
         if (index + 1) > mediaTypes.count - 1 {
-            print("completed processing similiarities")
             fetchSecondaryMedaTypes()
 
             return
         } else {
             self.assetFetch.mediaType = mediaTypes[index + 1]
-            print(self.assetFetch.mediaType, " gterfweda")
             self.similarityManager?.type = self.assetFetch.mediaType
             self.assetFetch.fetch()
         }
@@ -129,7 +126,6 @@ class HomeNavigationViewModel {
         })
         let index = mediaTypes.firstIndex(of: self.assetFetch.mediaType) ?? 0
         if (index + 1) > mediaTypes.count - 1 {
-            print("completed fetching all")
             return
         }
         self.assetFetch.mediaType = mediaTypes[index + 1]
@@ -150,7 +146,6 @@ class HomeNavigationViewModel {
             self.fileCount.updateValue(dbCount[.allVideos] ?? 0, forKey: .video)
 
             self.fileSizes.removeAll()
-            print(dbSizes, " mabdfjhbfadjbhbjhadsbhjadsn b")
             dbSizes.forEach { (key: MediaGroupType, value: CGFloat) in
                 let oldValue = (self.fileSizes[key.assetType] ?? 0)
                 self.fileSizes.updateValue(oldValue + Int(value), forKey: key.assetType)
@@ -181,7 +176,6 @@ class HomeNavigationViewModel {
                 return (total: totalGB, used: usedGB, free: freeGB)
             }
         } catch {
-            print("Error retrieving storage info: \(error)")
         }
         return nil
     }
