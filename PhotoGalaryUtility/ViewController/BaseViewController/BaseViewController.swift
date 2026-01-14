@@ -12,7 +12,8 @@ class BaseViewController: UIViewController {
     var secondaryButton: ButtonData? { nil }
     var navigationTransactionAnimatedView: UIView? { nil }
     var navigationTransactionTargetView: UIView? { nil }
-    
+    var isDemo: Bool = false
+
     var getTransactionAnimationView: UIView? {
         navigationTransactionAnimatedView ?? navigationTransactionTargetView
     }

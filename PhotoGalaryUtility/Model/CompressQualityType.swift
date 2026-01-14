@@ -21,4 +21,8 @@ enum CompressQualityType: String, CaseIterable {
               AVAssetExportPresetHEVCHighestQuality
         }
     }
+    
+    var index: Int {
+        Self.allCases.firstIndex(of: self) ?? 0
+    }
 }

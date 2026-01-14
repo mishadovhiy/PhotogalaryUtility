@@ -23,22 +23,22 @@ class VideoCompressorViewController: BaseViewController {
     var didCompress: Bool = false
     var selectedCompression: CompressQualityType = .low {
         didSet {
-          //  DispatchQueue.global(qos: .utility).async {
-                if let asset = self.asset {
-                    if #available(iOS 13.0.0, *) {
-                        Task {
-                            self.newSize = await self.galaryEditorService.calcVideoSize(asset: asset, quality: self.selectedCompression)
-                            await MainActor.run {
-                                self.tableView.reloadData()
-                            }
+            //  DispatchQueue.global(qos: .utility).async {
+            if let asset = self.asset {
+                if #available(iOS 13.0.0, *) {
+                    Task {
+                        self.newSize = await self.galaryEditorService.calcVideoSize(asset: asset, quality: self.selectedCompression)
+                        await MainActor.run {
+                            self.tableView.reloadData()
                         }
                     }
-
                 }
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-         //   }
+                
+            }
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+            //   }
         }
     }
     
@@ -107,22 +107,28 @@ class VideoCompressorViewController: BaseViewController {
         tableView.dataSource = self
         self.tableView.reloadData()
         updateTableViewConstraints()
-        self.loadAVAsset(from: self.selectedAsset!) { asset in
-            if let asset {
-                if #available(iOS 13.0.0, *) {
-                    Task {
-                        self.newSize = await self.galaryEditorService.calcVideoSize(asset: asset, quality: self.selectedCompression)
-                        await MainActor.run {
-                            self.tableView.reloadData()
+        if let asset = selectedAsset {
+            self.loadAVAsset(from: self.selectedAsset!) { asset in
+                if let asset {
+                    if #available(iOS 13.0.0, *) {
+                        Task {
+                            self.newSize = await self.galaryEditorService.calcVideoSize(asset: asset, quality: self.selectedCompression)
+                            await MainActor.run {
+                                self.tableView.reloadData()
+                            }
                         }
                     }
                 }
+                
+                
+                DispatchQueue.main.async {
+                    self.asset = asset
+                }
             }
             
-
-            DispatchQueue.main.async {
-                self.asset = asset
-            }
+        } else {
+            demoImageView.image = .demoVideoPlayer
+            self.demoImageView.alpha = 1
         }
     }
     
@@ -214,12 +220,18 @@ extension VideoCompressorViewController: UITableViewDelegate, UITableViewDataSou
         switch indexPath.section {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: .init(describing: CompressorCell.self), for: indexPath) as! CompressorCell
-            DispatchQueue.global(qos: .utility).async {
-                let size = self.selectedAsset?.fileSize.bytesToMegaBytes ?? 0
-                DispatchQueue.main.async {
-                    cell.set(.init(currentSize: size, compressedSize: CGFloat(self.newSize?.bytesToMegaBytes ?? 0)))
+            if isDemo {
+                cell.set(.init(currentSize: 80, compressedSize: Double((self.selectedCompression.index + 1) * 13)))
+
+            } else {
+                DispatchQueue.global(qos: .utility).async {
+                    let size = self.selectedAsset?.fileSize.bytesToMegaBytes ?? 0
+                    DispatchQueue.main.async {
+                        cell.set(.init(currentSize: size, compressedSize: CGFloat(self.newSize?.bytesToMegaBytes ?? 0)))
+                    }
                 }
             }
+            
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: .init(describing: ComressorQualityCell.self), for: indexPath) as! ComressorQualityCell

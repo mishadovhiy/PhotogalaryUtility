@@ -49,9 +49,10 @@ class HomeNavigationController: UINavigationController {
         DispatchQueue(label: "db", qos: .background).async {
             DispatchQueue.main.async {
                 DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
-//                    self.setViewControllers([test ? HomeGalaryViewController.configure() : OnboardingPageViewController.configure()], animated: true)
                     let vc = HomeGalaryViewController.configure()
-                    self.setViewControllers([vc], animated: true)
+                    self.setViewControllers([test ? HomeGalaryViewController.configure() : OnboardingPageViewController.configure()], animated: true)
+
+//                    self.setViewControllers([vc], animated: true)
 //                    if vc is HomeGalaryViewController {
                         self.viewModel.assetFetch.fetch()
 //                    }
@@ -111,15 +112,21 @@ class HomeNavigationController: UINavigationController {
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         switch data.style {
         case .link:
-            button.setTitleColor(.blue, for: .init())
-            button.titleLabel?.textColor = .blue
-            button.tintColor = .blue
+            button.setTitleColor(.accent, for: .init())
+            button.titleLabel?.textColor = .accent
+            button.tintColor = .accent
             button.backgroundColor = .clear
         case .primary:
             button.titleLabel?.textColor = .white
             button.setTitleColor(.white, for: .init())
             button.tintColor = .white
-            button.backgroundColor = .blue
+            button.backgroundColor = .accent
+            button.layer.shadowColor = UIColor.accent.cgColor
+            button.layer.shadowOffset = .zero
+            button.layer.shadowRadius = 5
+            button.layer.shadowOpacity = 0.4
+            
+            
         }
         button.layer.cornerRadius = 10
     }

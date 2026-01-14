@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeGalaryViewController: UIViewController {
+class HomeGalaryViewController: BaseViewController {
 
     @IBOutlet private weak var storageUsedPercentLabel: UILabel!
     @IBOutlet private weak var storageCyclePercentView: UIView!
@@ -15,13 +15,18 @@ class HomeGalaryViewController: UIViewController {
     @IBOutlet private weak var collectionBackgroundView: UIView!
     @IBOutlet private weak var statisticView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
-    
     var collectionData: [GalaryCollectionModel] {
-        let fileSizes = (navigationController as? HomeNavigationController)?.viewModel.fileSizes
-        let fileCount = (navigationController as? HomeNavigationController)?.viewModel.fileCount
+        let fileSizes = (navigationController as? HomeNavigationController)?.viewModel.fileSizes ?? (isDemo ? [
+            .image: 500,
+            .video: 240
+        ] : [:])
+        let fileCount = (navigationController as? HomeNavigationController)?.viewModel.fileCount ?? (isDemo ? [
+            .image: 4300,
+            .video: 230
+        ] : [:])
         return [
-            .init(section: .init(sectionTitle: "Video Compressor", subtitle: "\(fileCount?[.video] ?? 0) Media • \(fileSizes?[.video] ?? 0) MB ", leftIconAssetName: .video, needViewAllButton: false, tint: .pink), collectionData: [.init(asset: .assetName("demoVideoThumb"))]),
-            .init(section: .init(sectionTitle: "Media", subtitle: "\(fileCount?[.image] ?? 0) Media • \(fileSizes?[.image] ?? 0) MB ", leftIconAssetName: .image, needViewAllButton: true, tint: .darkBlue), collectionData: [.init(asset: .assetName("demoThumb")), .init(asset: .assetName("demoThumb2"))])
+            .init(section: .init(sectionTitle: "Video Compressor", subtitle: "\(fileCount[.video] ?? 0) Media • \(fileSizes[.video] ?? 0) MB ", leftIconAssetName: .video, needViewAllButton: false, tint: .pink), collectionData: [.init(asset: .assetName("demoVideoThumb"))]),
+            .init(section: .init(sectionTitle: "Media", subtitle: "\(fileCount[.image] ?? 0) Media • \(fileSizes[.image] ?? 0) MB ", leftIconAssetName: .image, needViewAllButton: true, tint: .darkBlue), collectionData: [.init(asset: .assetName("demoThumb")), .init(asset: .assetName("demoThumb2"))])
         ]
     }
     
@@ -42,21 +47,7 @@ class HomeGalaryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let nav = (self.navigationController as? HomeNavigationController)
-        DispatchQueue(label: "utility", qos: .utility).async {
-            let deviceStorage = nav?.viewModel.deviceStorageStats()
-            DispatchQueue.main.async {
-                let storageText: NSMutableAttributedString = .init(string: "iPhone Storage" + "\n")
-                storageText.append(.init(string: "\(deviceStorage?.used.formated ?? "") GB", attributes: [
-                    .font: UIFont.systemFont(ofSize: self.storageLabel.font.pointSize, weight: .semibold)
-                ]))
-                storageText.append(.init(string: " " + "of \(deviceStorage?.total.formated ?? "") GB"))
-                self.storageLabel.attributedText = storageText
-                let percents = (deviceStorage?.used ?? 0) / (deviceStorage?.total ?? 0)
-                self.storageUsedPercentLabel.text = "\(Int(percents * 100))%"
-                self.setStoragePercentPath(percent: percents)
-            }
-        }
+        setDeviceStorageLabels()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -71,12 +62,37 @@ class HomeGalaryViewController: UIViewController {
         
     }
     
+    func setDeviceStorageLabels() {
+        let nav = (self.navigationController as? HomeNavigationController)
+        DispatchQueue(label: "utility", qos: .utility).async {
+            let deviceStorage = nav?.viewModel.deviceStorageStats() ?? (total: 256, used: 150, free: 106)
+            DispatchQueue.main.async {
+                let storageText: NSMutableAttributedString = .init(string: "iPhone Storage" + "\n")
+                storageText.append(.init(string: "\(deviceStorage.used.formated) GB", attributes: [
+                    .font: UIFont.systemFont(ofSize: self.storageLabel.font.pointSize, weight: .semibold)
+                ]))
+                storageText.append(.init(string: " " + "of \(deviceStorage.total.formated) GB"))
+                self.storageLabel.attributedText = storageText
+                let percents = (deviceStorage.used) / (deviceStorage.total)
+                if percents.isFinite && !percents.isNaN {
+                    self.storageUsedPercentLabel.text = "\(Int(percents * 100))%"
+
+                } else {
+                    self.storageUsedPercentLabel.text = "0%"
+
+                }
+                self.setStoragePercentPath(percent: percents)
+            }
+        }
+    }
+    
     func setStoragePercentPath(percent: CGFloat) {
         
         let startAngle: CGFloat = -.pi / 2
         let endAngle = (startAngle + .pi) * percent
         let radius: CGFloat = 40
-        let center = CGPoint(x: 50 + radius, y: 50 + radius)
+        let space:CGFloat = isDemo ? 35 : 50
+        let center = CGPoint(x: space + radius, y: space + radius)
         
         let path = UIBezierPath(
             arcCenter: center,

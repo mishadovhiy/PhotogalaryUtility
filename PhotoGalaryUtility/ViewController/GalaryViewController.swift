@@ -16,12 +16,11 @@ class GalaryViewController: BaseViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var filesCountLabel: UILabel!
     var fetchAssetService: PHFetchManager!
-    var mediaType: MediaGroupType!
+    var mediaType: MediaGroupType! = .allVideos
     var collectionData: [[GalaryItemPresentationModel]] = []
     var selectedVideoIdxPath: IndexPath?
     var navigationTransaction: NavigationTransactionDelegate?
     let phLibraryEditorManager = PHLibraryEditorManager()
-    
     var selectedAseetIDs: [String] = [] {
         didSet {
             (self.navigationController as? HomeNavigationController)?.setupButtons()
@@ -83,17 +82,28 @@ class GalaryViewController: BaseViewController {
         }
         loadTabBarItems()
         setupHeaderItems()
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(didRefresh), for: .valueChanged)
-        collectionView.refreshControl = refreshControl
-        refreshControl.beginRefreshing()
+        if !isDemo {
+            let refreshControl = UIRefreshControl()
+            refreshControl.addTarget(self, action: #selector(didRefresh), for: .valueChanged)
+            collectionView.refreshControl = refreshControl
+            refreshControl.beginRefreshing()
+        }
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        DispatchQueue(label: "phAssets", qos: .background).async {
-            self.fetchAssetService.fetch()
+        if !isDemo {
+            DispatchQueue(label: "phAssets", qos: .background).async {
+                self.fetchAssetService.fetch()
+            }
+        } else {
+            self.collectionData = [["demoVideoThumb", "demoThumb2", "demoThumb"].compactMap({
+                .init(asset: .assetName($0))
+            })]
+            self.collectionView.reloadData()
         }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -221,11 +231,13 @@ extension GalaryViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
         switch self.mediaType {
         case .dublicatedPhotos, .similiarPhotos, .similiarVideos:
-            if indexPath.row == 0 {
+            if indexPath.row == 0 && !isDemo {
                 data.bottomLabel = "Best"
             }
         case .allVideos:
-            data.topLabel = "10 MB"
+            if !isDemo {
+                data.topLabel = "10 MB"
+            }
         default: break
         }
         switch data.asset {
