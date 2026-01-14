@@ -57,14 +57,14 @@ struct HomeNavigationViewModel {
         }
     }
     
-    
     func didCompleteFetching() {
-        DispatchQueue(label: "db", qos: .userInitiated).async {
-            var db = LocalDataBaseService.db
-            
-            db.metadataHelper.fileSizes.updateValue(self.assetFetch.fetchTotalSize, forKey: self.assetFetch.mediaType)
-            db.metadataHelper.filesCount.updateValue(self.assetFetch.assets.count, forKey: self.assetFetch.mediaType)
-            LocalDataBaseService.db = db
+        if !self.assetFetch.mediaType.needAnalizeAI {
+            DispatchQueue(label: "db", qos: .userInitiated).async {
+                var db = LocalDataBaseService.db
+                
+                db.metadataHelper.filesCount.updateValue(self.assetFetch.assets.count, forKey: self.assetFetch.mediaType)
+                LocalDataBaseService.db = db
+            }
         }
         if assetFetch.mediaType.needAnalizeAI {
             photoSimiliaritiesCompletedAssetFetch()

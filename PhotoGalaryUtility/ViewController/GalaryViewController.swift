@@ -19,14 +19,41 @@ class GalaryViewController: BaseViewController {
     var collectionData: [[GalaryItemPresentationModel]] = []
     var selectedVideoIdxPath: IndexPath?
     var navigationTransaction: NavigationTransactionDelegate?
-    var selectedAseetIDs: [String] = []
+    let phLibraryEditorManager = PHLibraryEditorManager()
     
+    var selectedAseetIDs: [String] = [] {
+        didSet {
+            (self.navigationController as? HomeNavigationController)?.setupButtons()
+        }
+    }
+    override var primaryButton: ButtonData? {
+        if self.selectedAseetIDs.isEmpty {
+            return nil
+        } else {
+            return .init(title: "Delete \(selectedAseetIDs.count)") {
+                self.deleteSelectedPressed()
+            }
+        }
+    }
     override var navigationTransactionAnimatedView: UIView? {
         guard let selectedVideoIdxPath else {
             return nil
         }
 
         return collectionView.cellForItem(at: selectedVideoIdxPath) as? PhotoCollectionViewCell
+    }
+    
+    func deleteSelectedPressed() {
+        let assets: [PHAsset] = .init(_immutableCocoaArray: self.fetchAssetService.assets).filter({
+            self.selectedAseetIDs.contains($0.localIdentifier)
+        })
+
+        phLibraryEditorManager.delete(assets) {
+            self.selectedAseetIDs.removeAll()
+            self.collectionData.removeAll()
+            self.fetchAssetService.fetch()
+            FileManagerService().writeData(SimilarityDataBaseModel(), type: .mediaGroupType(self.fetchAssetService.mediaType))
+        }
     }
     
     override func loadView() {
@@ -74,16 +101,24 @@ class GalaryViewController: BaseViewController {
         }
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y + scrollView.contentInset.top + self.view.safeAreaInsets.top
-#warning("todo: update header constraint")
-
-    }
-    
     @objc func toggleSelectionsDidPress(_ sender: UIButton) {
         if sender.tag == 0 {
             sender.tag = 1
-            let new: [PHAsset] = Array(_immutableCocoaArray: self.fetchAssetService.assets)
+            var new: [PHAsset] = []
+            if self.mediaType.needAnalizeAI {
+                
+                self.collectionData.forEach {
+                    $0.dropFirst().forEach {
+                        switch $0.asset {
+                        case .phAsset(let phAsset):
+                            new.append(phAsset)
+                        default: break
+                        }
+                    }
+                }
+            } else {
+                new = Array(_immutableCocoaArray: fetchAssetService.assets)
+            }
             selectedAseetIDs = new.compactMap({
                 $0.localIdentifier
             })
@@ -127,7 +162,6 @@ extension GalaryViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath, " gefds ")
         let data = collectionData[indexPath.section][indexPath.row]
         switch self.mediaType {
         case .allVideos:
@@ -253,17 +287,24 @@ extension GalaryViewController: PHFetchManagerDelegate {
             guard let self else {
                 return
             }
-            var db = LocalDataBaseService.db
-            db.metadataHelper.fileSizes.updateValue(self.fetchAssetService.fetchTotalSize, forKey: self.fetchAssetService.mediaType)
-            db.metadataHelper.filesCount.updateValue(self.fetchAssetService.assets.count, forKey: self.fetchAssetService.mediaType)
-            LocalDataBaseService.db = db
+
             if mediaType.needAnalizeAI {
                 photoSimiliaritiesCompletedAssetFetch()
             } else {
+
+
+                
                 collectionData = [Array(_immutableCocoaArray: fetchAssetService.assets).compactMap({
                     .init(asset: .phAsset($0))
                 })]
+
+                let count = self.collectionData.flatMap({$0}).count
+                var db = LocalDataBaseService.db
+                db.metadataHelper.filesCount.updateValue(count, forKey: self.fetchAssetService.mediaType)
+                LocalDataBaseService.db = db
+                
                 DispatchQueue.main.async {
+                    self.filesCountLabel.text = "\(count) Files"
                     self.collectionView.reloadData()
                 }
             }
@@ -280,22 +321,33 @@ extension GalaryViewController: PHFetchManagerDelegate {
                 
                 dict.forEach { (key: String, value: [String]) in
                     if value.count >= 1 {
-                        let asset = assetArray.first(where: {
+                        if let asset = assetArray.first(where: {
                             $0.localIdentifier == key
-                        })
-                        var new: [GalaryItemPresentationModel] = [.init(asset: .phAsset(asset!))]
-                        new.append(contentsOf: value.compactMap({ key in
-                            let asset = assetArray.first(where: {
-                                $0.localIdentifier == key
-                            })
-                            return .init(asset: .phAsset(asset!))
-                        }))
-                        self.collectionData.append(new)
+                        }) {
+                            var new: [GalaryItemPresentationModel] = [.init(asset: .phAsset(asset))]
+                            new.append(contentsOf: value.compactMap({ key in
+                                if let asset = assetArray.first(where: {
+                                    $0.localIdentifier == key
+                                }) {
+                                    return .init(asset: .phAsset(asset))
+                                } else {
+                                    return nil
+                                }
+                            }))
+                            self.collectionData.append(new)
+                        }
+                        
                     }
                     
                 }
+                var db = LocalDataBaseService.db
+                let count = self.collectionData.flatMap({$0}).count
+
+                db.metadataHelper.filesCount.updateValue(count, forKey: self.fetchAssetService.mediaType)
+                LocalDataBaseService.db = db
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
+                    self.filesCountLabel.text = "\(count) Files"
                 }
             }
             

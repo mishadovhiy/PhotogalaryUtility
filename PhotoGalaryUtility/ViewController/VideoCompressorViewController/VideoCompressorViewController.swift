@@ -17,6 +17,8 @@ class VideoCompressorViewController: BaseViewController {
     override var navigationTransactionTargetView: UIView? {
         videoContainerView
     }
+    var navigationTransitionDelegateHolder: UINavigationControllerDelegate?
+    
     var didCompress: Bool = false
     var selectedCompression: CompressQualityType = .low
     
@@ -25,20 +27,27 @@ class VideoCompressorViewController: BaseViewController {
             return .init(title: "Keep Original Video", style: .primary)
         } else {
             return .init(title: "Compress", didPress: {
-                let vc = RefreshViewController.configure()
-                vc.appearedAction = {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: {
-                        self.didCompress = true
-                        self.tableView.reloadData()
-
-                        vc.navigationController?.popViewController(animated: true)
-                    })
-                }
-                self.navigationController?.pushViewController(vc, animated: true)
+                self.startCompressingAnimation()
             })
         }
     }
     var count = 4
+    
+    func startCompressingAnimation() {
+        let vc = RefreshViewController.configure()
+        vc.appearedAction = {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: {
+                self.didCompress = true
+                self.tableView.reloadData()
+
+                vc.navigationController?.popViewController(animated: true)
+                self.navigationController?.delegate = self.navigationTransitionDelegateHolder
+            })
+        }
+        self.navigationTransitionDelegateHolder = self.navigationController?.delegate
+        self.navigationController?.delegate = nil
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     
     override func loadView() {
         super.loadView()

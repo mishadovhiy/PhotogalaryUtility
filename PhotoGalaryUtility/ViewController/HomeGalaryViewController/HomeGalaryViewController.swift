@@ -58,6 +58,8 @@ class HomeGalaryViewController: UIViewController {
                 self.collectionView.contentInset.top = self.statisticView.frame.height
             }
         }
+        
+        (navigationController as? HomeNavigationController)?.viewModel.assetFetch.fetch()
     }
     
     func setStoragePercentPath() {

@@ -86,6 +86,13 @@ class PHFetchManager {
         
         delegate?.didCompleteFetching()
     }
+    
+    func calculateAssetsSize() -> CGFloat {
+        let array: [PHAsset] = Array(_immutableCocoaArray: assets)
+        return array.reduce(0, { partialResult, asset in
+            partialResult + asset.fileSize
+        }).bytesToMegaBytes
+    }
 
     func fetchThumb(_ asset: PHAsset, completion: @escaping(_ image: UIImage?) -> ()) {
         DispatchQueue(label: "thumb", qos: .userInitiated).async {

@@ -23,4 +23,16 @@ struct PHLibraryEditorManager {
             }
         }
     }
+    
+    func delete(
+        _ assets: [PHAsset],
+        completion:@escaping()->()) {
+            PHPhotoLibrary.shared().performChanges({
+                PHAssetChangeRequest.deleteAssets(assets as NSFastEnumeration)
+            }, completionHandler: { success, error in
+                DispatchQueue.main.async {
+                    completion()
+                }
+            })
+        }
 }

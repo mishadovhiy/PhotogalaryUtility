@@ -49,16 +49,16 @@ class HomeNavigationController: UINavigationController {
 //                    self.setViewControllers([test ? HomeGalaryViewController.configure() : OnboardingPageViewController.configure()], animated: true)
                     let vc = HomeGalaryViewController.configure()
                     self.setViewControllers([vc], animated: true)
-                    if vc is HomeGalaryViewController {
-                        self.viewModel.assetFetch.fetch()
-                    }
+//                    if vc is HomeGalaryViewController {
+//                        self.viewModel.assetFetch.fetch()
+//                    }
 
                 })
             }
         }
     }
     
-    private func setupButtons(topViewController: UIViewController? = nil) {
+    func setupButtons(topViewController: UIViewController? = nil) {
 //        let animator = UIViewPropertyAnimator(duration: 0.3, curve: .linear)
         let vc = (topViewController ?? self.topViewController) as? BaseViewController
         var buttonData = [vc?.primaryButton, vc?.secondaryButton]

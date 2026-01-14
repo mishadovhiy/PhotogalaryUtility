@@ -40,13 +40,7 @@ class MediaTypePickerViewController: BaseViewController {
         super.didCompleteSilimiaritiesProccessing()
         DispatchQueue(label: "db", qos: .background).async {
             self.db = LocalDataBaseService.db
-            MediaGroupType.allCases.forEach { type in
-                let fileManagerDict = self.fileManager.similiaritiesData(type: type).photos ?? [:]
-                let combinedArray = fileManagerDict.flatMap { (key, values) in
-                    [key] + values
-                }
-                self.fileManagerFileCounts.updateValue(combinedArray.count, forKey: type)
-            }
+
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
@@ -62,12 +56,7 @@ extension MediaTypePickerViewController: UICollectionViewDelegate, UICollectionV
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: .init(describing: MediaTypeCell.self), for: indexPath) as! MediaTypeCell
         let type = collectionData[indexPath.row]
-        let count: Int
-        if type.needAnalizeAI {
-            count = self.fileManagerFileCounts[type] ?? 0
-        } else {
-            count = db?.metadataHelper.filesCount[type] ?? 0
-        }
+        let count = db?.metadataHelper.filesCount[type] ?? 0
         cell.set(type: collectionData[indexPath.row], dataCount: count)
         return cell
     }
