@@ -8,24 +8,38 @@
 import UIKit
 
 class RefreshViewController: BaseViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var subtitleLabel: UILabel!
+    
+    var presentationData: PresentationModel?
+    
+    override var primaryButton: ButtonData? {
+        (presentationData?.canCancel ?? false) ? .init(title: "Cancel", didPress: {
+            self.navigationController?.popViewController(animated: true)
+        }) : nil
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func loadView() {
+        super.loadView()
+        titleLabel.text = presentationData?.title
+        subtitleLabel.text = presentationData?.bottomSubtitle
+        [titleLabel, subtitleLabel].forEach {
+            if $0?.text?.isEmpty ?? true {
+                $0?.isHidden = true
+            }
+        }
     }
-    */
+}
 
+extension RefreshViewController {
+    
+    struct PresentationModel {
+        let title: String
+        let bottomSubtitle: String
+        let canCancel: Bool
+    }
+    
     static func configure() -> Self {
         return self.configure(storyboardID: "Reusable")
     }

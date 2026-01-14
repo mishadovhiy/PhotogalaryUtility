@@ -19,17 +19,44 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Sbp-5J-5T6">
-                                <rect key="frame" x="178" y="407.66666666666669" width="37" height="37"/>
-                            </activityIndicatorView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="wib-S6-m7y">
+                                <rect key="frame" x="50" y="376.66666666666669" width="293" height="98.666666666666686"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Sbp-5J-5T6">
+                                        <rect key="frame" x="128" y="0.0" width="37" height="37"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </activityIndicatorView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kEl-Z2-SR6">
+                                        <rect key="frame" x="118.33333333333336" y="70" width="56.666666666666671" height="28.666666666666671"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="niG-0J-cR4">
+                                <rect key="frame" x="45" y="740.66666666666663" width="303" height="19.333333333333371"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="MJO-He-Qof"/>
                         <color key="backgroundColor" name="BlueColor"/>
                         <constraints>
-                            <constraint firstItem="Sbp-5J-5T6" firstAttribute="centerY" secondItem="KjZ-cw-XCx" secondAttribute="centerY" id="HeG-me-AfA"/>
-                            <constraint firstItem="Sbp-5J-5T6" firstAttribute="centerX" secondItem="KjZ-cw-XCx" secondAttribute="centerX" id="sbI-Yr-a9E"/>
+                            <constraint firstItem="MJO-He-Qof" firstAttribute="trailing" secondItem="wib-S6-m7y" secondAttribute="trailing" constant="50" id="DqO-SM-Pf3"/>
+                            <constraint firstItem="wib-S6-m7y" firstAttribute="centerY" secondItem="KjZ-cw-XCx" secondAttribute="centerY" id="NWR-LT-tJm"/>
+                            <constraint firstItem="MJO-He-Qof" firstAttribute="trailing" secondItem="niG-0J-cR4" secondAttribute="trailing" constant="45" id="Y11-F7-7br"/>
+                            <constraint firstItem="wib-S6-m7y" firstAttribute="leading" secondItem="MJO-He-Qof" secondAttribute="leading" constant="50" id="epV-f3-WTp"/>
+                            <constraint firstItem="niG-0J-cR4" firstAttribute="leading" secondItem="MJO-He-Qof" secondAttribute="leading" constant="45" id="hTy-cB-LXx"/>
+                            <constraint firstItem="MJO-He-Qof" firstAttribute="bottom" secondItem="niG-0J-cR4" secondAttribute="bottom" constant="24" id="pro-LN-Rbg"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="subtitleLabel" destination="niG-0J-cR4" id="NpT-jj-1Nz"/>
+                        <outlet property="titleLabel" destination="kEl-Z2-SR6" id="qAC-Nh-are"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ijG-gp-Vdh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -361,19 +388,19 @@
         <image name="checkmark" width="11" height="11"/>
         <image name="nextIcon" width="40" height="40"/>
         <namedColor name="AccentColor">
-            <color red="0.28627450980392155" green="0.3529411764705882" blue="0.9137254901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.28600001335144043" green="0.3529999852180481" blue="0.91399997472763062" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="BlueColor">
-            <color red="0.52941176470588236" green="0.70196078431372544" blue="0.98431372549019602" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.52899998426437378" green="0.70200002193450928" blue="0.98400002717971802" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="DarkBlueColor">
-            <color red="0.28627450980392155" green="0.3529411764705882" blue="0.9137254901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.28600001335144043" green="0.3529999852180481" blue="0.91399997472763062" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="DarkTextColor">
-            <color red="0.16862745098039217" green="0.16862745098039217" blue="0.16862745098039217" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.16899999976158142" green="0.16899999976158142" blue="0.16899999976158142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="SecondaryTextColor">
-            <color red="0.52156862745098043" green="0.52156862745098043" blue="0.52156862745098043" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.5220000147819519" green="0.5220000147819519" blue="0.5220000147819519" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

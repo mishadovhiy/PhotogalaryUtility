@@ -48,6 +48,7 @@ class VideoCompressorViewController: BaseViewController {
     
     func startCompressingAnimation() {
         let vc = RefreshViewController.configure()
+        vc.presentationData = .init(title: "Compressing Video...", bottomSubtitle: "Please don’t close the app in order not to lose all progress", canCancel: true)
         vc.appearedAction = {
             self.loadAVAsset(from: self.selectedAsset!) { asset in
                 self.galaryEditorService.saveVideo(asset: asset!) { ok in
