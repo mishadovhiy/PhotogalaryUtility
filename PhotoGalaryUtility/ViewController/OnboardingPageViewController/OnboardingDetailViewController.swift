@@ -23,6 +23,11 @@ class OnboardingDetailViewController: UIViewController {
         super.viewDidAppear(animated)
         if self.children.isEmpty {
             loadChild()
+        } else {
+            children.forEach {
+                $0.removeFromParent()
+            }
+            loadChild()
         }
         
     }
