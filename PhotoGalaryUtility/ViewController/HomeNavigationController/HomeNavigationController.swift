@@ -27,6 +27,9 @@ class HomeNavigationController: UINavigationController {
         viewModel.similarityManager = .init(type: viewModel.assetFetch.mediaType)
         self.navigationItem.largeTitleDisplayMode = .always
         super.loadView()
+        if #available(iOS 13.0, *) {
+            setAppearence()
+        }
         setRefreshing()
         loadButtonsStack()
     }
@@ -191,11 +194,31 @@ extension HomeNavigationController {
             button.heightAnchor.constraint(equalToConstant: 44 + (i == 0 ? 16 : 0)).isActive = true
         }
     }
+    
+    @available(iOS 13.0, *)
+    func setAppearence() {
+        let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = .white
+            
+            appearance.titleTextAttributes = [.foregroundColor: UIColor.darkGray]
+            appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.darkGray]
+            
+            navigationController?.navigationBar.standardAppearance = appearance
+            navigationController?.navigationBar.scrollEdgeAppearance = appearance
+            navigationController?.navigationBar.compactAppearance = appearance
+            navigationController?.navigationBar.prefersLargeTitles = true
+    }
 }
 
 extension HomeNavigationController: PHFetchManagerDelegate {
     func didCompleteFetching() {
         viewModel.didCompleteFetching()
+        viewModel.calculateAllMediaSizesFromDB {
+            self.viewControllers.forEach {
+                ($0 as? HomeGalaryViewController)?.collectionView.reloadData()
+            }
+        }
     }
     
     func didCompleteSilimiaritiesProcessing() {

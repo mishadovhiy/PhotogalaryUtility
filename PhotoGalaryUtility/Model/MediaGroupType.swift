@@ -23,8 +23,8 @@ enum MediaGroupType: String, Codable, CaseIterable {
         default: .image
         }
     }
-    
-    enum AssetType {
+    nonisolated
+    enum AssetType: String, Codable, CaseIterable {
         case image, video
     }
     

@@ -36,7 +36,12 @@ class PhotoCollectionViewCell: UICollectionViewCell {
             self.imageView.image = .init(named: name)
         case .phAsset(let asset):
             if !(data.topLabel?.isEmpty ?? true) {
-                topLeftLabel.text = "\(Int(asset.fileSize.bytesToMegaBytes)) MB"
+            DispatchQueue.global(qos: .utility).async {
+                let size = asset.fileSize
+                DispatchQueue.main.async {
+                    self.topLeftLabel.text = "\(Int(size.bytesToMegaBytes)) MB"
+                }
+            }
             }
             break
         default:

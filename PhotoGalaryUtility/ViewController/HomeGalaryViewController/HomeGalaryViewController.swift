@@ -14,12 +14,16 @@ class HomeGalaryViewController: UIViewController {
     @IBOutlet private weak var storageLabel: UILabel!
     @IBOutlet private weak var collectionBackgroundView: UIView!
     @IBOutlet private weak var statisticView: UIView!
-    @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionView: UICollectionView!
     
-    var collectionData: [GalaryCollectionModel] = [
-        .init(section: .init(sectionTitle: "Video Compressor", subtitle: "12267 Media • 54.7 GB ", leftIconAssetName: .video, needViewAllButton: false, tint: .pink), collectionData: [.init(asset: .assetName("demoVideoThumb"))]),
-        .init(section: .init(sectionTitle: "Media", subtitle: "12267 Media • 54.7 GB ", leftIconAssetName: .image, needViewAllButton: true, tint: .darkBlue), collectionData: [.init(asset: .assetName("demoThumb")), .init(asset: .assetName("demoThumb2"))])
-    ]
+    var collectionData: [GalaryCollectionModel] {
+        let fileSizes = (navigationController as? HomeNavigationController)?.viewModel.fileSizes
+        let fileCount = (navigationController as? HomeNavigationController)?.viewModel.fileCount
+        return [
+            .init(section: .init(sectionTitle: "Video Compressor", subtitle: "\(fileCount?[.video] ?? 0) Media • \(fileSizes?[.video] ?? 0) MB ", leftIconAssetName: .video, needViewAllButton: false, tint: .pink), collectionData: [.init(asset: .assetName("demoVideoThumb"))]),
+            .init(section: .init(sectionTitle: "Media", subtitle: "\(fileCount?[.image] ?? 0) Media • \(fileSizes?[.image] ?? 0) MB ", leftIconAssetName: .image, needViewAllButton: true, tint: .darkBlue), collectionData: [.init(asset: .assetName("demoThumb")), .init(asset: .assetName("demoThumb2"))])
+        ]
+    }
     
     override func loadView() {
         super.loadView()
@@ -32,21 +36,27 @@ class HomeGalaryViewController: UIViewController {
         if #available(iOS 13.0, *) {
             collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         }
-        loadStorageUsedProgressLayer(needPath: true)
         loadStorageUsedProgressLayer(needPath: false)
 
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let storageText: NSMutableAttributedString = .init(string: "iPhone Storage" + "\n")
-        storageText.append(.init(string: "28.7 GB", attributes: [
-            .font: UIFont.systemFont(ofSize: storageLabel.font.pointSize, weight: .semibold)
-        ]))
-        storageText.append(.init(string: " " + "of 128.0 GB"))
-        storageLabel.attributedText = storageText
-        storageUsedPercentLabel.text = "44%"
-        setStoragePercentPath()
+        let nav = (self.navigationController as? HomeNavigationController)
+        DispatchQueue(label: "utility", qos: .utility).async {
+            let deviceStorage = nav?.viewModel.deviceStorageStats()
+            DispatchQueue.main.async {
+                let storageText: NSMutableAttributedString = .init(string: "iPhone Storage" + "\n")
+                storageText.append(.init(string: "\(deviceStorage?.used.formated ?? "") GB", attributes: [
+                    .font: UIFont.systemFont(ofSize: self.storageLabel.font.pointSize, weight: .semibold)
+                ]))
+                storageText.append(.init(string: " " + "of \(deviceStorage?.total.formated ?? "") GB"))
+                self.storageLabel.attributedText = storageText
+                let percents = (deviceStorage?.used ?? 0) / (deviceStorage?.total ?? 0)
+                self.storageUsedPercentLabel.text = "\(Int(percents * 100))%"
+                self.setStoragePercentPath(percent: percents)
+            }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -61,9 +71,8 @@ class HomeGalaryViewController: UIViewController {
         
     }
     
-    func setStoragePercentPath() {
+    func setStoragePercentPath(percent: CGFloat) {
         
-        let percent = 0.8
         let startAngle: CGFloat = -.pi / 2
         let endAngle = (startAngle + .pi) * percent
         let radius: CGFloat = 40
@@ -72,12 +81,12 @@ class HomeGalaryViewController: UIViewController {
         let path = UIBezierPath(
             arcCenter: center,
             radius: radius,
-            startAngle: -.pi / 2,
-            endAngle: .pi / 2,
+            startAngle: startAngle,
+            endAngle: endAngle,
             clockwise: true
         )
         let layer = storageCyclePercentView.layer.sublayers?.first(where: {
-            $0 is CAShapeLayer && $0.name != "backgroundOval"
+            $0 is CAShapeLayer
         }) as? CAShapeLayer
         layer?.path = path.cgPath
     }

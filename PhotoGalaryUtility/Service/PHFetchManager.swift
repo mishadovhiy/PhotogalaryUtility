@@ -91,14 +91,19 @@ class PHFetchManager {
         
         print("fetchedd ", self.mediaType, " frwed", assets.count)
 
-        delegate?.didCompleteFetching()
+        self.delegate?.didCompleteFetching()
     }
     
-    func calculateAssetsSize() -> CGFloat {
+    func calculateAssetsSize(completion: @escaping(_ result: CGFloat)->()) {
         let array: [PHAsset] = Array(_immutableCocoaArray: assets)
-        return array.reduce(0, { partialResult, asset in
-            partialResult + asset.fileSize
-        }).bytesToMegaBytes
+        DispatchQueue.global(qos: .utility).async {
+            let result = array.reduce(0, { partialResult, asset in
+                partialResult + asset.fileSize
+            }).bytesToMegaBytes
+            DispatchQueue.main.async {
+                completion(result)
+            }
+        }
     }
 
     func fetchThumb(_ asset: PHAsset, completion: @escaping(_ image: UIImage?) -> ()) {

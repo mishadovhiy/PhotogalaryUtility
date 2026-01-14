@@ -11,6 +11,7 @@ import Vision
 
 class GalaryViewController: BaseViewController {
     
+    @IBOutlet weak var filesSizeLabel: UILabel!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var filesCountLabel: UILabel!
@@ -327,6 +328,7 @@ extension GalaryViewController: PHFetchManagerDelegate {
                     self.filesCountLabel.text = "\(count) Files"
                     self.collectionView.reloadData()
                     self.collectionView.refreshControl?.endRefreshing()
+                    self.filesSizeLabel.text = "\(Int(db.metadataHelper.fileSizes[self.fetchAssetService.mediaType] ?? 0)) MB"
                 }
             }
         }
@@ -370,6 +372,8 @@ extension GalaryViewController: PHFetchManagerDelegate {
                     self.collectionView.reloadData()
                     self.filesCountLabel.text = "\(count) Files"
                     self.collectionView.refreshControl?.endRefreshing()
+                    self.filesSizeLabel.text = "\(Int(db.metadataHelper.fileSizes[self.fetchAssetService.mediaType] ?? 0)) MB"
+
                 }
             }
             
