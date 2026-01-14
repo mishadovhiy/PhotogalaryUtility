@@ -121,7 +121,7 @@ class SimiliarDetectionService {
                 do {
                     try handler.perform([request])
                 } catch {
-                    fatalError()
+                    
                 }
             }
             
@@ -242,7 +242,6 @@ class SimiliarDetectionService {
                 }
             })
         } else {
-            fatalError()
         }
     }
     

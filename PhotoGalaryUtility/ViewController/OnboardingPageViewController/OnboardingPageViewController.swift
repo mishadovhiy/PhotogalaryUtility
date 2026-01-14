@@ -17,7 +17,7 @@ class OnboardingPageViewController: UIPageViewController {
             if (self.viewControllers?.first?.view.tag ?? 0) + 1 >= self.pageData.count {
                 let navigation = self.navigationController as? HomeNavigationController
                 navigation?.setRefreshing {
-                    navigation?.dbSetInitialViewController(test: true)
+                    navigation?.dbSetInitialViewController(completed: true)
                 }
                 
             } else {

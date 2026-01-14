@@ -45,20 +45,18 @@ class HomeNavigationController: UINavigationController {
         setViewControllers([vc], animated: true)
     }
     
-    func dbSetInitialViewController(test: Bool = false) {
+    func dbSetInitialViewController(completed: Bool = false) {
         DispatchQueue(label: "db", qos: .background).async {
+            if completed {
+                LocalDataBaseService.db.general.onboardingCompleted = true
+            }
+            let db = LocalDataBaseService.db.general.onboardingCompleted
             DispatchQueue.main.async {
-                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
-                    let vc = HomeGalaryViewController.configure()
-                    self.setViewControllers([test ? vc : OnboardingPageViewController.configure()], animated: true)
-
-//                    self.setViewControllers([vc], animated: true)
-                    if vc is HomeGalaryViewController {
-                    
-                        self.viewModel.assetFetch.fetch()
-                    }
-
-                })
+                let vc = db ? HomeGalaryViewController.configure() : OnboardingPageViewController.configure()
+                self.setViewControllers([vc], animated: true)
+                if vc is HomeGalaryViewController {
+                    self.viewModel.assetFetch.fetch()
+                }
             }
         }
     }
