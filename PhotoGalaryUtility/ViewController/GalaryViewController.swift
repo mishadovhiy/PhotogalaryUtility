@@ -53,6 +53,8 @@ class GalaryViewController: BaseViewController {
             self.collectionData.removeAll()
             self.fetchAssetService.fetch()
             FileManagerService().writeData(SimilarityDataBaseModel(), type: .mediaGroupType(self.fetchAssetService.mediaType))
+            (self.navigationController as? HomeNavigationController)?.viewModel.assetFetch.fetch()
+
         }
     }
     
@@ -149,6 +151,12 @@ class GalaryViewController: BaseViewController {
             sender.tag = 1
             updateSelectAllButton(sender: sender)
         }
+    }
+    
+    override func didCompleteSilimiaritiesProccessing() {
+        super.didCompleteSilimiaritiesProccessing()
+        self.fetchAssetService.fetch()
+        
     }
 }
 

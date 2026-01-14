@@ -9,6 +9,11 @@ import Foundation
 
 struct LocalDataBaseModel: Codable {
     var metadataHelper: MetadataHelper = .init()
+    var general: General = .init()
+    
+    struct General: Codable {
+        var onboardingCompleted: Bool = false
+    }
     
     struct MetadataHelper: Codable {
         var fileSizes: [MediaGroupType: CGFloat] = [:]

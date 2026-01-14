@@ -50,7 +50,7 @@ class HomeNavigationController: UINavigationController {
                     let vc = HomeGalaryViewController.configure()
                     self.setViewControllers([vc], animated: true)
 //                    if vc is HomeGalaryViewController {
-//                        self.viewModel.assetFetch.fetch()
+                        self.viewModel.assetFetch.fetch()
 //                    }
 
                 })

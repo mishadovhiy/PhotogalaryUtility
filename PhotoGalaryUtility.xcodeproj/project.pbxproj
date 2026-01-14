@@ -467,6 +467,8 @@
 				DEVELOPMENT_TEAM = FQA2XH9ZUM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PhotoGalaryUtility/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Photo library adding access";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "to modify your galary we need access to your photo library";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -500,6 +502,8 @@
 				DEVELOPMENT_TEAM = FQA2XH9ZUM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PhotoGalaryUtility/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Photo library adding access";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "to modify your galary we need access to your photo library";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

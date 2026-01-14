@@ -9,7 +9,7 @@ import UIKit
 import Photos
 
 class VideoCompressorViewController: BaseViewController {
-
+    
     @IBOutlet private weak var demoImageView: UIImageView!
     @IBOutlet private var tableView: UITableView!
     @IBOutlet weak var videoContainerView: UIView!
@@ -18,31 +18,48 @@ class VideoCompressorViewController: BaseViewController {
         videoContainerView
     }
     var navigationTransitionDelegateHolder: UINavigationControllerDelegate?
+    let galaryEditorService: PHLibraryEditorManager = .init()
     
     var didCompress: Bool = false
     var selectedCompression: CompressQualityType = .low
     
     override var primaryButton: ButtonData? {
         if didCompress {
-            return .init(title: "Keep Original Video", style: .primary)
+            return .init(title: "Keep Original Video", style: .primary, didPress: {
+                self.navigationController?.popViewController(animated: true)
+            })
         } else {
             return .init(title: "Compress", didPress: {
                 self.startCompressingAnimation()
             })
         }
     }
-    var count = 4
+    override var secondaryButton: ButtonData? {
+        if didCompress {
+            return .init(title: "Delete original", didPress: {
+                self.galaryEditorService.delete([self.selectedAsset!]) {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            })
+        } else {
+            return nil
+        }
+    }
     
     func startCompressingAnimation() {
         let vc = RefreshViewController.configure()
         vc.appearedAction = {
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: {
-                self.didCompress = true
-                self.tableView.reloadData()
-
-                vc.navigationController?.popViewController(animated: true)
-                self.navigationController?.delegate = self.navigationTransitionDelegateHolder
-            })
+            self.loadAVAsset(from: self.selectedAsset!) { asset in
+                self.galaryEditorService.saveVideo(asset: asset!) { ok in
+                    self.didCompress = true
+                    self.tableView.reloadData()
+                    
+                    vc.navigationController?.popViewController(animated: true)
+                    self.navigationController?.delegate = self.navigationTransitionDelegateHolder
+                    
+                }
+            }
+            
         }
         self.navigationTransitionDelegateHolder = self.navigationController?.delegate
         self.navigationController?.delegate = nil
@@ -59,7 +76,7 @@ class VideoCompressorViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         tableView.delegate = self
         tableView.dataSource = self
         self.tableView.reloadData()
@@ -71,7 +88,7 @@ class VideoCompressorViewController: BaseViewController {
         
         updateTableViewConstraints()
     }
-
+    
     func updateTableViewConstraints() {
         let constant = tableView.constraints.first(where: {
             $0.firstAttribute == .height
@@ -85,7 +102,27 @@ class VideoCompressorViewController: BaseViewController {
         }
         animation.startAnimation()
     }
-
+    
+    func loadAVAsset(
+        from phAsset: PHAsset,
+        completion: @escaping (AVAsset?) -> Void
+    ) {
+        guard phAsset.mediaType == .video else {
+            completion(nil)
+            return
+        }
+        
+        let options = PHVideoRequestOptions()
+        options.isNetworkAccessAllowed = true
+        options.deliveryMode = .highQualityFormat
+        
+        PHImageManager.default().requestAVAsset(
+            forVideo: phAsset,
+            options: options
+        ) { avAsset, _, _ in
+            completion(avAsset)
+        }
+    }
 }
 
 fileprivate

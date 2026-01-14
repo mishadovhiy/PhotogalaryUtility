@@ -16,6 +16,7 @@ class MediaTypePickerViewController: BaseViewController {
     var db: LocalDataBaseModel?
     let fileManager: FileManagerService = .init()
     var fileManagerFileCounts: [MediaGroupType: Int] = [:]
+    
     override func loadView() {
         super.loadView()
         title = "Media"
@@ -23,7 +24,6 @@ class MediaTypePickerViewController: BaseViewController {
         collectionView.dataSource = self
         collectionView.contentInset.left = 16
         collectionView.contentInset.right = 16
-
     }
     
     override func viewDidLoad() {

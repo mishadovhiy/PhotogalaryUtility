@@ -31,6 +31,16 @@ class PHFetchManager {
     }
     
     func fetch(type: MediaGroupType? = nil) {
+        if #available(iOS 14, *) {
+            PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
+                self.performFetch(type: type)
+            }
+        } else {
+            self.performFetch(type: type)
+        }
+    }
+    
+    private func performFetch(type: MediaGroupType? = nil) {
         if let type {
             mediaType = type
         }
@@ -79,10 +89,6 @@ class PHFetchManager {
             }
         }
         
-//        let array: [PHAsset] = Array(_immutableCocoaArray: assets)
-//        self.fetchTotalSize = array.reduce(0, { partialResult, asset in
-//            partialResult + asset.fileSize
-//        }).bytesToMegaBytes
         
         delegate?.didCompleteFetching()
     }

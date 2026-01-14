@@ -59,7 +59,6 @@ class HomeGalaryViewController: UIViewController {
             }
         }
         
-        (navigationController as? HomeNavigationController)?.viewModel.assetFetch.fetch()
     }
     
     func setStoragePercentPath() {
