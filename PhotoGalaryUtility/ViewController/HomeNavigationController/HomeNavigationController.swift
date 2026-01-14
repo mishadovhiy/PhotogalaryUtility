@@ -50,12 +50,13 @@ class HomeNavigationController: UINavigationController {
             DispatchQueue.main.async {
                 DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
                     let vc = HomeGalaryViewController.configure()
-                    self.setViewControllers([test ? HomeGalaryViewController.configure() : OnboardingPageViewController.configure()], animated: true)
+                    self.setViewControllers([test ? vc : OnboardingPageViewController.configure()], animated: true)
 
 //                    self.setViewControllers([vc], animated: true)
-//                    if vc is HomeGalaryViewController {
+                    if vc is HomeGalaryViewController {
+                    
                         self.viewModel.assetFetch.fetch()
-//                    }
+                    }
 
                 })
             }

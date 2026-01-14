@@ -31,6 +31,7 @@ class PHFetchManager {
     }
     
     func fetch(type: MediaGroupType? = nil) {
+        fatalError()
         if #available(iOS 14, *) {
             PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
                 self.performFetch(type: type)
